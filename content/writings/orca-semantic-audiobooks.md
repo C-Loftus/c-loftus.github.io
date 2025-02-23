@@ -59,6 +59,8 @@ A simple config for `input-remapper` could be placed at: `~/.config/input-remapp
 ]
 ```
 
+Then once you run `sudo systemctl enable input-remapper` in the terminal, these bindings will automatically be applied at boot. Given the fact the controller itself can also auto-pair, there is very low friction when using this workflow.
+
 At the moment, the main limiting factor is Linux mobile hardware. There aren't many great mobile devices that support Orca. You could either use a Raspberry Pi with a rechargable battery, stay in the range of the bluetooth from your Linux laptop, or try experimenting with newer Linux mobile devices like the Pinephone. Even until Linux mobile devices get better support, being able to use this workflow while relaxing at home, stretching out, or doing chores is very pleasant. 
 
 In the future there is no reason why we can't integrate such a tool with voice control and get even further productivity gains. For instance, jumping to a specific spoken query or editing a screen reader setting on the fly could easily be done if an onboard mic were present. Being able to do all of this without needing to look at a screen whatsoever or sit at a desk is a huge win towards making our interactions with computers more healthy and diversified. 
