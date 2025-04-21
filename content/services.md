@@ -34,8 +34,8 @@ Sessions can be as long or as short you need. Not sure if your needs fit my serv
 <center>
 
 <div style="display: flex; align-items: center; justify-content: center;">
-    <img src="https://avatars.githubusercontent.com/u/32918202?s=200&v=4" alt="Talon Logo" title="Talon Voice Control" style="border-radius: 40px; margin-right: 10px; width: 200px; height: 200px;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Orca.svg/1200px-Orca.svg.png" alt="Orca" title="Orca Screen Reader" style="border-radius: 40px; width: 200px; height: 200px;">
+    <img src="/talon-logo.png" alt="Talon Logo" title="Talon Voice Control" style="border-radius: 40px; margin-right: 10px; width: 200px; height: 200px;">
+    <img src="/orca-logo.png" alt="Orca" title="Orca Screen Reader" style="border-radius: 40px; width: 200px; height: 200px;">
 </div>
 <br>
 
