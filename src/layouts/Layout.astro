@@ -1,3 +1,9 @@
+---
+import "./src/styles/global.css";
+import Header from "../components/Header.astro";
+import Themes from "astro-themes";
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -6,17 +12,33 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
+		<title>Astro Themes Example</title>
+		<Themes defaultTheme="dark" />
 	</head>
 	<body>
-		<slot />
-	</body>
+		<div
+			style="
+			border-top: 10px solid;
+			border-image-source: linear-gradient(90deg,#5d2f86,#8ed6fb 50%,#d32e9d);
+			border-image-slice: 1;
+			position: fixed;
+			top: 0;
+			right: 0;
+			left: 0;
+			z-index: 1030;
+		"
+		>
+		</div>
+		<Header />
+		<main>
+			<slot />
+		</main>
+	</body><style>
+		html,
+		body {
+			margin: 0;
+			width: 100%;
+			height: 100%;
+		}
+	</style>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
