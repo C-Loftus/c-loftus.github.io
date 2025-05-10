@@ -6,7 +6,7 @@
     <!-- Switch to dark mode (sun icon shown in light mode) -->
     <button
         type="button"
-        class="block dark:hidden p-2 rounded hover:bg-gray-200"
+        class="block dark:hidden p-2 rounded hover:bg-gray-200 cursor-pointer"
         onclick="document.dispatchEvent(new CustomEvent('set-theme', { detail: 'dark' }))"
         aria-label="Switch to dark mode"
     >
@@ -29,7 +29,7 @@
     <!-- Switch to light mode (moon icon shown in dark mode) -->
     <button
         type="button"
-        class="hidden dark:block p-2 rounded hover:bg-gray-700"
+        class="hidden dark:block p-2 rounded hover:bg-gray-700 cursor-pointer"
         onclick="document.dispatchEvent(new CustomEvent('set-theme', { detail: 'light' }))"
         aria-label="Switch to light mode"
     >

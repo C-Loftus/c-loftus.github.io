@@ -1,5 +1,26 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import colton from "../assets/colton.png";
 ---
 
-<Layout />
+<Layout>
+    <div class="flex items-start justify-center min-h-screen">
+        <div class="flex flex-col items-center mt-25">
+            <Image
+                src={colton}
+                alt="Colton Loftus"
+                title="Colton Loftus"
+                class="mx-auto rounded-full h-[12.5rem] w-[12.5rem] object-cover"
+            />
+            <p class="mt-4 text-center text-2xl font-bold">Colton Loftus</p>
+
+            <p class="mt-4 text-center text-lg max-w-[20rem] px-4">
+                Geospatial Software Engineer
+            </p>
+            <p class="mt-1 text-center text-lg max-w-[20rem] px-4">
+                Princeton CS '23
+            </p>
+        </div>
+    </div>
+</Layout>
