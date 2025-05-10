@@ -1,5 +1,6 @@
 ---
 import ThemeIcon from "./ThemeIcon.astro";
+const currentPath = Astro.url.pathname;
 ---
 
 <div class="flex items-center justify-between w-full px-8 pt-8">
@@ -11,11 +12,24 @@ import ThemeIcon from "./ThemeIcon.astro";
     </div>
     <nav>
         <ul class="navbar flex gap-2">
-            <li><a href="/about" class="underline">About</a></li>
-            <li><a href="/contact" class="underline">Contact</a></li>
-            <li><a href="/services" class="underline">Services</a></li>
-            <li><a href="/portfolio" class="underline">Portfolio</a></li>
-            <li><a href="/writings" class="underline">Writings</a></li>
+            {
+                [
+                    { path: "/about", name: "About" },
+                    { path: "/contact", name: "Contact" },
+                    { path: "/services", name: "Services" },
+                    { path: "/portfolio", name: "Portfolio" },
+                    { path: "/writings", name: "Writings" },
+                ].map(({ path, name }) => (
+                    <li>
+                        <a
+                            href={path}
+                            class={currentPath === path ? "underline" : ""}
+                        >
+                            {name}
+                        </a>
+                    </li>
+                ))
+            }
         </ul>
     </nav>
 </div>
