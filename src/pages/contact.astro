@@ -9,7 +9,7 @@ import Layout from "../layouts/Layout.astro";
         method="POST"
         class="max-w-xl mt-20 mx-auto p-6 bg-gray-100 dark:bg-neutral-800 rounded-xl shadow-md space-y-6"
     >
-        <h2 class="text-2xl opacity-40">Contact me</h2>
+        <h2 class="text-2xl opacity-40">Leave a message</h2>
         <p class="space-y-2">
             <label
                 for="email"
@@ -48,11 +48,16 @@ import Layout from "../layouts/Layout.astro";
         </div>
     </form>
 
-    <div class="max-w-xl mx-auto mt-12 text-gray-900 dark:text-gray-100">
-        <h1 id="my-links" class="text-2xl font-bold mb-4">My Links</h1>
+    <div class="max-w-sm mx-auto mt-12 text-gray-900 dark:text-gray-100 pb-4">
+        <h1 id="my-links" class="text-2xl font-bold mb-4">Contact list</h1>
         <ul class="list-disc list-inside space-y-2">
             {
                 [
+                    {
+                        name: "Email: website@colton.place",
+                        href: "mailto:website@colton.place",
+                        extra: "",
+                    },
                     {
                         name: "LinkedIn",
                         href: "https://www.linkedin.com/in/coltonl/",
@@ -65,7 +70,7 @@ import Layout from "../layouts/Layout.astro";
                         name: "Talon Slack (@Colton Loftus)",
                         href: "https://talonvoice.slack.com/team/U02S1LGCH9A",
                     },
-                ].map(({ name, href }) => (
+                ].map(({ name, href, extra }) => (
                     <li>
                         <a
                             href={href}
@@ -73,6 +78,7 @@ import Layout from "../layouts/Layout.astro";
                         >
                             {name}
                         </a>
+                        <i>{extra}</i>
                     </li>
                 ))
             }
