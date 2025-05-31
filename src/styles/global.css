@@ -6,6 +6,7 @@ ul {
     font-size: large;
     padding-left: 1.5em;
 }
+
 p,
 li {
     font-size: large
@@ -40,15 +41,22 @@ a {
 hr {
     margin: 3em;
 
-    @media (prefers-color-scheme: light) {
-        border: 0;
-        height: 1px;
-        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    }
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, currentColor, transparent);
+}
 
-    @media (prefers-color-scheme: dark) {
-        border: 0;
-        height: 1px;
-        background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
-    }
+&[data-theme=dark] hr {
+    background-image: linear-gradient(to right, transparent, #fff, transparent);
+}
+
+pre {
+    border-radius: 6px;
+    /* slight rounding */
+    padding: 14px;
+    /* inner padding */
+    background-color: #f4f4f4;
+    /* optional: to distinguish the block */
+    overflow: auto;
+    /* optional: handle long content gracefully */
 }
