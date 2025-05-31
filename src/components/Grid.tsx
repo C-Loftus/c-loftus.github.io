@@ -11,13 +11,13 @@ interface PortfolioItem {
 
 const portfolioItems: PortfolioItem[] = [
   {
-    id: 1,
-    title: "Nabu",
-    link: "https://github.com/internetofwater/nabu",
+    id: 6,
+    title: "Geoconnex Scheduler",
+    link: "https://github.com/internetofwater/scheduler/",
     description:
-      "Synchronize the contents of a S3 bucket with a graph database",
+      "A data orchestrator for distributed water data; funded by the US Geological Survey",
     category: "Data Engineering",
-    language: "Go / Rust",
+    language: "Python",
   },
   {
     id: 2,
@@ -29,6 +29,15 @@ const portfolioItems: PortfolioItem[] = [
     language: "Typescript",
   },
   {
+    id: 1,
+    title: "Nabu",
+    link: "https://github.com/internetofwater/nabu",
+    description:
+      "Synchronize the contents of a S3 bucket with a graph database",
+    category: "Data Engineering",
+    language: "Go / Rust",
+  },
+  {
     id: 3,
     title: "QuickPiperAudiobook",
     description:
@@ -36,15 +45,6 @@ const portfolioItems: PortfolioItem[] = [
     category: "Accessibility",
     link: "https://github.com/C-Loftus/QuickPiperAudiobook",
     language: "Go",
-  },
-  {
-    id: 4,
-    title: "Sight-free-talon",
-    description:
-      "Integrate the Talon voice dictation software with a screen reader for use by blind individuals",
-    category: "Accessibility",
-    link: "https://github.com/C-Loftus/sight-free-talon/",
-    language: "Python",
   },
   {
     id: 5,
@@ -56,12 +56,12 @@ const portfolioItems: PortfolioItem[] = [
     language: "Python",
   },
   {
-    id: 6,
-    title: "Geoconnex Scheduler",
-    link: "https://github.com/internetofwater/scheduler/",
+    id: 4,
+    title: "Sight-free-talon",
     description:
-      "A data orchestrator for distributed water data; funded by the US Geological Survey",
-    category: "Data Engineering",
+      "Integrate the Talon voice dictation software with a screen reader for use by blind individuals",
+    category: "Accessibility",
+    link: "https://github.com/C-Loftus/sight-free-talon/",
     language: "Python",
   },
 ];

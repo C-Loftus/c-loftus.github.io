@@ -3,85 +3,89 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-    <form
-        name="contact"
-        action="https://formspree.io/f/xayrbyzk"
-        method="POST"
-        class="max-w-xl mt-20 mx-auto p-6 bg-gray-100 dark:bg-neutral-800 rounded-xl shadow-md space-y-6"
-    >
-        <h2 class="text-2xl opacity-40">Leave a message</h2>
-        <p class="space-y-2">
-            <label
-                for="email"
-                class="block text-gray-900 dark:text-gray-100 font-semibold"
-                >Your email:</label
-            >
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Let me know how to best respond to you!"
-                required
-                class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-neutral-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
-            />
-        </p>
-        <p class="space-y-2">
-            <label
-                for="message"
-                class="block text-gray-900 dark:text-gray-100 font-semibold"
-                >Your message:</label
-            >
-            <textarea
-                id="message"
-                name="message"
-                placeholder="Send me a message or a service inquiry!"
-                class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-neutral-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
-            ></textarea>
-        </p>
-        <div class="text-center">
-            <button
-                type="submit"
-                class="px-6 py-3 rounded-md bg-neutral-200 dark:bg-neutral-600 dark:text-gray-100 font-semibold hover:opacity-70 hover:cursor-pointer"
-            >
-                Submit
-            </button>
-        </div>
-    </form>
-
-    <div class="max-w-sm mx-auto mt-12 text-gray-900 dark:text-gray-100 pb-4">
-        <h1 id="my-links" class="text-2xl font-bold mb-4">Contact list</h1>
-        <ul class="list-disc list-inside space-y-2">
-            {
-                [
-                    {
-                        name: "Email: website@colton.place",
-                        href: "mailto:website@colton.place",
-                        extra: "",
-                    },
-                    {
-                        name: "LinkedIn",
-                        href: "https://www.linkedin.com/in/coltonl/",
-                    },
-                    {
-                        name: "Github",
-                        href: "https://github.com/C-Loftus",
-                    },
-                    {
-                        name: "Talon Slack (@Colton Loftus)",
-                        href: "https://talonvoice.slack.com/team/U02S1LGCH9A",
-                    },
-                ].map(({ name, href, extra }) => (
-                    <li>
-                        <a
-                            href={href}
-                            class="underline hover:text-gray-700 dark:hover:text-gray-300"
-                        >
-                            {name}
-                        </a>
-                        <i>{extra}</i>
-                    </li>
-                ))
-            }
-        </ul>
+  <form
+    name="contact"
+    action="https://formspree.io/f/xayrbyzk"
+    method="POST"
+    class="max-w-xl mt-20 mx-auto p-6 bg-gray-100 dark:bg-neutral-800 rounded-xl shadow-md space-y-6"
+  >
+    <h2 class="text-2xl opacity-40">Leave a message</h2>
+    <p class="space-y-2">
+      <label
+        for="email"
+        class="block text-gray-900 dark:text-gray-100 font-semibold"
+        >Your email:</label
+      >
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Let me know how to best respond to you!"
+        required
+        class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-neutral-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+      />
+    </p>
+    <p class="space-y-2">
+      <label
+        for="message"
+        class="block text-gray-900 dark:text-gray-100 font-semibold"
+        >Your message:</label
+      >
+      <textarea
+        id="message"
+        name="message"
+        placeholder="Send me a message or a service inquiry!"
+        class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-neutral-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+      ></textarea>
+    </p>
+    <div class="text-center">
+      <button
+        type="submit"
+        class="px-6 py-3 rounded-md bg-neutral-200 dark:bg-neutral-600 dark:text-gray-100 font-semibold hover:opacity-70 hover:cursor-pointer"
+      >
+        Submit
+      </button>
     </div>
+  </form>
+
+  <div class="max-w-sm mx-auto mt-12 text-gray-900 dark:text-gray-100 pb-4">
+    <h1 id="my-links" class="text-2xl font-bold mb-4">Contact list</h1>
+    <ul class="list-disc list-inside space-y-2">
+      {
+        [
+          {
+            name: "Email: website@colton.place",
+            href: "mailto:website@colton.place",
+            extra: "",
+          },
+          {
+            name: "LinkedIn",
+            href: "https://www.linkedin.com/in/coltonl/",
+          },
+          {
+            name: "Github",
+            href: "https://github.com/C-Loftus",
+          },
+          {
+            name: "Talon Slack (@Colton Loftus)",
+            href: "https://talonvoice.slack.com/team/U02S1LGCH9A",
+          },
+          {
+            name: "YouTube",
+            href: "https://www.youtube.com/@ColtonLoftus",
+          },
+        ].map(({ name, href, extra }) => (
+          <li>
+            <a
+              href={href}
+              class="underline hover:text-gray-700 dark:hover:text-gray-300"
+            >
+              {name}
+            </a>
+            <i>{extra}</i>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </Layout>

@@ -7,9 +7,13 @@ tags: ["software", "accessibility", "programming"]
 layout: ../../layouts/CenteredText.astro
 ---
 
-_All code mentioned in this article can be found here:_
+# Fully Custom Pedals with Talon Voice
 
-_[https://github.com/C-Loftus/colton_talon/tree/master/pedal](https://github.com/C-Loftus/colton_talon/tree/master/pedal)_
+<div class="p-4 text-center">
+
+_All code mentioned in this article can be found [here](https://github.com/C-Loftus/colton_talon/tree/master/pedal)_
+
+</div>
 
 # An Intro
 
@@ -50,7 +54,7 @@ Talon has the ability to capture and operate upon key presses. A `.talon` file i
 
 Most nicer pedals like the Kinesis Savant or the Olympus footswitch can remap keys at the hardware level so we don't need any extra software. Additionally by using normal keys, once we progress to custom pedals, we don't need access to the Arduino joystick library and can use a wider variety of microcontrollers.
 
-![](https://imgs.search.brave.com/crNJm8HCGrgQTRRx_U49ShImqedt6BSn4PDCB5ceg_8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jMS5u/ZXdlZ2dpbWFnZXMu/Y29tL1Byb2R1Y3RJ/bWFnZS9BOTFOXzFf/MjAxNjA3MjkxMjkx/NjUwNTIxLmpwZw) -->
+![](https://imgs.search.brave.com/crNJm8HCGrgQTRRx_U49ShImqedt6BSn4PDCB5ceg_8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jMS5u/ZXdlZ2dpbWFnZXMu/Y29tL1Byb2R1Y3RJ/bWFnZS9BOTFOXzFf/MjAxNjA3MjkxMjkx/NjUwNTIxLmpwZw)
 
 Once we have the proper mapping, we can easily capture the key and send it to Python.
 
@@ -108,13 +112,13 @@ Because of the fact that we are using an internal state dictionary, our `north` 
 
 DanceDanceRevolution is one of the few games I have played that is intended to be played with hands-free-input and still feels natural while doing so. By leveraging some of the design decisions used for the game and building around natural movements, we can create a foot pedal (in reality more like a pad) that is more ergonomic and less likely to cause repetitive strain injury.
 
-![My foot pedal that is custom designed to look like a dance dance revolution dance](/pad.png)
+![My foot pedal that is custom designed to look like a dance dance revolution dance pad](./assets/pad.png)
 
 Using force-sensitive resistors, we are able to activate the press with as much movement as we want. We can simply shift our weight onto it and make small movements such as pivoting our ankles or standing on our toes. However, we can also make full stomp-like movements, as if we are walking in place.
 
 These types of movements make the design ideal for use at a standing desk. Additionally, since there is no need for ankle hinges and more movement options, there is a lower risk of developing RSI around the ankle or foot (the type of which you might get driving a car for a long period of time).
 
-![My foot pedal that is custom designed to look like a dance dance revolution dance](/pedal.gif)
+![My foot pedal that is custom designed to look like a dance dance revolution dance pad](./assets/pedal.gif)
 
 
 While this may not seem significant for occasional pedal usage, it is crucial to optimize the design for individuals who press pedals hundreds of times a day at their desks.

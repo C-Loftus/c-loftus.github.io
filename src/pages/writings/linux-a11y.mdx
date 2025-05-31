@@ -6,7 +6,9 @@ tags: ["linux", "software", "accessibility", "programming"]
 layout: ../../layouts/CenteredText.astro
 ---
 
-While completing my [thesis research](https://github.com/c-loftus/princeton-Thesis) on computer accessibility and ML models for speech recognition, I became quite familiar with the landscape of hands-free accessibility software and the related tooling on Linux. In this post I hope to show some of my opinions and provide advice to others who might be looking to control their computer via dictation. Many of these software choices and setup decisions are platform agnostic, but I am primarily focused on Linux.
+# Linux Hands-Free Accessibility
+
+While completing my undergrad [thesis research](https://github.com/c-loftus/princeton-Thesis) on computer accessibility and ML models for speech recognition, I became quite familiar with the landscape of hands-free accessibility software and the related tooling on Linux. In this post I hope to show some of my opinions and provide advice to others who might be looking to control their computer via dictation. Many of these software choices and setup decisions are platform agnostic, but I am primarily focused on Linux.
 
 ## General Principles
 
@@ -36,9 +38,9 @@ Within the general Linux community, innovative or minimalist distributions are o
 Contrary to the popular belief of beginners on Linux, your distribution does not determine your window manager.  Once again, I think that stability is important when choosing your window manager. However at the same time, I believe that it is extremely important to choose a window manager or a desktop environment that can be easily controlled through keyboard commands. This makes it much easier to create custom behavior through talon   scripts.
 
 #### DWM and other Tilings Window Managers
- While many do not like how light weight it is, DWM has a lot of great benefits. It is extremely easy to rebind keys and essentially every action in the window manager can be controlled through a keyboard combination. Additionally, considering the fact windows tile dynamically, it is much easier to resize windows then it would be on a stacking window manager. Obviously though there are a few major downsides to DWM. Considering the customization has to be done through the source code, it can easily disrupt the stability of a system. Additionally you also have to bind external keyboard shortcuts in a program like sxhkd.  Overall, while I would not recommend DWM  I think it is important to remark of it, since I believe that it has some notable benefits.
+ While many do not like how lightweight it is, DWM has a lot of great benefits. It is extremely easy to rebind keys and essentially every action in the window manager can be controlled through a keyboard combination. Additionally, considering the fact windows tile dynamically, it is much easier to resize windows then it would be on a stacking window manager. Obviously though there are a few major downsides to DWM. Considering the customization has to be done through the source code, it can easily disrupt the stability of a system. Additionally you also have to bind external keyboard shortcuts in a program like sxhkd.  Overall, while I would not recommend DWM  I think it is important to remark of it, since I believe that it has some notable benefits.
 
-  Generally speaking, i3  And other tiling window mangers  have many of the same benefits and downsides.  They can automate window resizing and in doing so streamline your workflow. However, the time spent customizing may prove to be a hassle. -->
+Generally speaking, i3 and other tiling window mangers  have many of the same benefits and downsides.  They can automate window resizing and in doing so streamline your workflow. However, the time spent customizing may prove to be a hassle.
 
 ### Pop Tiling Shell
 

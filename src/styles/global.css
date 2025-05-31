@@ -3,7 +3,8 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 ul {
-    font-size: large
+    font-size: large;
+    padding-left: 1.5em;
 }
 p,
 li {
@@ -13,12 +14,41 @@ li {
 h1 {
     font-size: xx-large;
     text-align: center;
+    font-weight: bold;
 }
 
 h2 {
     font-size: x-large;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: large;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: medium;
+    font-weight: bold;
 }
 
 a {
     text-decoration: underline;
+}
+
+
+hr {
+    margin: 3em;
+
+    @media (prefers-color-scheme: light) {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    }
+
+    @media (prefers-color-scheme: dark) {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+    }
 }
