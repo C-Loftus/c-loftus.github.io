@@ -102,7 +102,7 @@ export default function PortfolioTable() {
                 Category {sortField === 'category' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
               <th
-                className="p-3 cursor-pointer"
+                className="cursor-pointer"
                 onClick={() => handleSort('language')}
               >
                 Language {sortField === 'language' && (sortDirection === 'asc' ? '↑' : '↓')}

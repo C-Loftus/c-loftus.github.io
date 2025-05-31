@@ -1,8 +1,13 @@
 ---
 import Layout from "./Layout.astro";
+import Image from "astro/components/Image.astro";
+import yacc from "../assets/yacc.png";
 ---
 
 <Layout>
+    <!-- <div class="opacity-20 fixed left-0 bottom-0 yacc dark:opacity-100">
+        <Image src={yacc} alt="yacc" />
+    </div> -->
     <div
         class="[&>p]:text-left [&>p]:pt-7 [&>p]:text-xl max-w-3xl mx-auto p-6 sm:p-8 lg:p-12 [&>ul]:list-disc"
     >
@@ -19,5 +24,10 @@ import Layout from "./Layout.astro";
         background-repeat: repeat-x;
         background-position: center bottom;
         border-radius: 40%;
+    }
+
+    .yacc img {
+        max-width: 200px;
+        height: auto;
     }
 </style>
