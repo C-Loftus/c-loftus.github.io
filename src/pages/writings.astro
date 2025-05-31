@@ -1,5 +1,61 @@
 ---
+import fs from "fs";
+import path from "path";
 import Layout from "../layouts/Layout.astro";
+
+const matches = import.meta.glob("../pages/writings/*.mdx", { eager: true });
+
+const posts = Object.entries(matches).map(([filePath, post]) => {
+  // Resolve absolute file path correctly
+  const fullPath = path.resolve(new URL(filePath, import.meta.url).pathname);
+
+  let lastModified = "Unknown";
+  try {
+    const stats = fs.statSync(fullPath);
+    lastModified = stats.mtime.toISOString().split("T")[0]; // YYYY-MM-DD
+  } catch (err) {
+    console.error(`Error reading file: ${fullPath}`, err);
+  }
+
+  return {
+    ...post,
+    lastModified,
+  };
+});
+
+function getPreview(text: string | undefined, wordCount = 10) {
+  if (!text) {
+    return "";
+  }
+  return text.split(" ").slice(0, wordCount).join(" ") + "...";
+}
 ---
 
-<Layout />
+<Layout>
+  <h1>Writings</h1>
+  <div class="flex justify-center">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-6 p-4 max-w-2xl w-full"
+    >
+      {
+        posts.map((post) => (
+          <a
+            href={post.url}
+            class="relative !no-underline block rounded-2xl p-6 transition-all duration-200 ease-in-out transform bg-neutral-100 text-neutral-900 shadow-md hover:shadow-lg active:scale-95 dark:bg-neutral-700 dark:text-neutral-100 dark:shadow-black/30"
+          >
+            <h2 class="text-xl font-semibold mb-2">{post.frontmatter.title}</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-10">
+              {getPreview(post.frontmatter.summary)}
+            </p>
+            {/* <div class="absolute bottom-4 left-6 text-sm text-gray-500 dark:text-gray-400">
+              {post.readingTime}
+            </div> */}
+            <div class="absolute bottom-4 right-6 text-sm text-gray-500 dark:text-gray-400">
+              Last modified: {post.lastModified}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>
