@@ -1,15 +1,35 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+import { Image } from "astro:assets";
+import { library, icon } from "@fortawesome/fontawesome-svg-core";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faYoutube,
+  faGithub,
+  faLinkedin,
+  faSlack,
+} from "@fortawesome/free-brands-svg-icons";
+
+// Declare all the icons you plan on using
+library.add(faYoutube, faGithub, faLinkedin, faSlack, faEnvelope);
+// Instantiate the icon with the icon function
+const youtubeIcon = icon({ prefix: "fab", iconName: faYoutube.iconName });
+const githubIcon = icon({ prefix: "fab", iconName: faGithub.iconName });
+const linkedinIcon = icon({ prefix: "fab", iconName: faLinkedin.iconName });
+const slackIcon = icon({ prefix: "fab", iconName: faSlack.iconName });
+const mailIcon = icon({ prefix: "fas", iconName: faEnvelope.iconName });
 ---
 
 <Layout>
+  <h1 class="text-2xl font-bold pt-8">Contact Options</h1>
+  <h2 class="text-2xl opacity-40 text-center mt-10">Leave a message here</h2>
   <form
     name="contact"
     action="https://formspree.io/f/xayrbyzk"
     method="POST"
-    class="max-w-xl mt-20 mx-auto p-6 bg-gray-100 dark:bg-neutral-800 rounded-xl shadow-md space-y-6"
+    class="max-w-xl mx-auto p-6 mt-2 bg-gray-100 dark:bg-neutral-800 rounded-xl shadow-md space-y-6"
   >
-    <h2 class="text-2xl opacity-40">Leave a message</h2>
     <p class="space-y-2">
       <label
         for="email"
@@ -48,8 +68,19 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </form>
 
-  <div class="max-w-sm mx-auto mt-12 text-gray-900 dark:text-gray-100 pb-4">
-    <h1 id="my-links" class="text-2xl font-bold mb-4">Contact list</h1>
+  <h2 class="mt-12 text-center opacity-40">External Options</h2>
+  <div
+    class="max-w-sm mx-auto text-gray-900 dark:text-gray-100 pb-4 max-w-xl
+    mt-2
+    mx-auto
+    p-6
+    bg-gray-100
+    dark:bg-neutral-800
+    rounded-xl
+    shadow-md
+    space-y-6
+    mb-10"
+  >
     <ul class="list-disc list-inside space-y-2">
       {
         [
@@ -57,32 +88,40 @@ import Layout from "../layouts/Layout.astro";
             name: "Email: website@colton.place",
             href: "mailto:website@colton.place",
             extra: "",
+            icon: mailIcon,
           },
           {
             name: "LinkedIn",
             href: "https://www.linkedin.com/in/coltonl/",
+            extra: "",
+            icon: linkedinIcon,
           },
           {
             name: "Github",
             href: "https://github.com/C-Loftus",
+            icon: githubIcon,
           },
           {
             name: "Talon Slack (@Colton Loftus)",
             href: "https://talonvoice.slack.com/team/U02S1LGCH9A",
+            icon: slackIcon,
           },
           {
             name: "YouTube",
             href: "https://www.youtube.com/@ColtonLoftus",
+            icon: youtubeIcon,
           },
-        ].map(({ name, href, extra }) => (
-          <li>
+        ].map(({ name, href, extra, icon }) => (
+          <li class="flex items-center gap-1">
             <a
               href={href}
-              class="underline hover:text-gray-700 dark:hover:text-gray-300"
+              title={name}
+              class="flex items-center gap-1 w-full hover:underline"
             >
-              {name}
+              <span class="w-7 h-7 opacity-70" set:html={icon.html} />
+              <span class="pl-4 text-sm">{name}</span>
+              <span class="text-sm">{extra}</span>
             </a>
-            <i>{extra}</i>
           </li>
         ))
       }
