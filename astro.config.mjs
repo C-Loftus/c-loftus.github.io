@@ -12,5 +12,7 @@ export default defineConfig({
     plugins: [tailwindcss(), mdx()]
   },
 
+  site: "https://colton.place",
+
   integrations: [mdx(), react()]
 });
