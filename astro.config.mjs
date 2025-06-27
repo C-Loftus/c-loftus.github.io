@@ -13,6 +13,7 @@ export default defineConfig({
   },
 
   site: "https://colton.place",
+  base: "/",
 
   integrations: [mdx(), react()]
 });
