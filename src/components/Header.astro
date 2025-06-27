@@ -4,36 +4,33 @@ const currentPath = Astro.url.pathname;
 ---
 
 <div class="flex items-center justify-between w-full px-8 pt-8">
-    <div class="flex items-center gap-2">
-        <p class="text-2xl">
-            <a href="/" class="!no-underline"> Colton Loftus </a>
-        </p>
-        <ThemeIcon />
-    </div>
-    <nav class="overflow-x-auto">
-        <ul class="navbar flex gap-2">
-            {
-                [
-                    { path: "/about", name: "About" },
-                    { path: "/contact", name: "Contact" },
-                    { path: "/services", name: "Services" },
-                    { path: "/portfolio", name: "Portfolio" },
-                    { path: "/writings", name: "Writings" },
-                ].map(({ path, name }) => (
-                    <li>
-                        <a
-                            href={path}
-                            class={
-                                currentPath === path
-                                    ? "underline"
-                                    : "!no-underline"
-                            }
-                        >
-                            {name}
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-    </nav>
+  <div class="flex items-center gap-2">
+    <p class="text-2xl">
+      <a href="/" class="!no-underline"> Colton Loftus </a>
+    </p>
+    <ThemeIcon />
+  </div>
+  <nav class="overflow-x-auto">
+    <ul class="navbar flex gap-2">
+      {
+        [
+          { path: "/about", name: "About" },
+          { path: "/contact", name: "Contact" },
+          { path: "/services", name: "Services" },
+          { path: "/portfolio", name: "Portfolio" },
+          { path: "/writings", name: "Writings" },
+        ].map(({ path, name }) => (
+          <li>
+            <a
+              href={path}
+              class={currentPath === path ? "underline" : "!no-underline"}
+            >
+              {name}
+            </a>
+            {currentPath} ____ {path}
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 </div>
