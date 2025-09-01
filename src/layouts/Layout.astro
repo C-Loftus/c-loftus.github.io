@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Themes from "astro-themes";
+import { PageGraph, PageBacklinks } from "starlight-site-graph/components";
 ---
 
 <!doctype html>
@@ -32,6 +33,8 @@ import Themes from "astro-themes";
 		>
 		</div>
 		<Header />
+		<PageGraph />
+		<!-- <PageBacklinks /> -->
 
 		<main>
 			<slot />
