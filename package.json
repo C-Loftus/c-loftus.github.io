@@ -24,6 +24,9 @@
     "starlight-site-graph": "^0.5.0",
     "tailwindcss": "^4.1.6"
   },
+  "overrides": {
+    "picomatch": "^4.0.3"
+  },
   "devDependencies": {
     "astro-themes": "^0.2.6"
   }
