@@ -1,5 +1,6 @@
 ---
 import ThemeIcon from "./ThemeIcon.astro";
+import GraphIcon from "../assets/graph.svg";
 const currentPath = Astro.url.pathname;
 ---
 
@@ -9,6 +10,11 @@ const currentPath = Astro.url.pathname;
       <a href="/" class="!no-underline"> Colton Loftus </a>
     </p>
     <ThemeIcon />
+    <button id="graph-toggle">
+      <GraphIcon
+        class="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded"
+      />
+    </button>
   </div>
   <nav class="overflow-x-auto">
     <ul class="navbar flex gap-2">
@@ -23,7 +29,11 @@ const currentPath = Astro.url.pathname;
           <li>
             <a
               href={path}
-              class={currentPath === path ? "underline" : "!no-underline"}
+              class={
+                currentPath.replace(/\/$/, "") === path.replace(/\/$/, "")
+                  ? "underline"
+                  : "!no-underline"
+              }
             >
               {name}
             </a>
@@ -33,3 +43,20 @@ const currentPath = Astro.url.pathname;
     </ul>
   </nav>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const graphBtn = document.getElementById("graph-toggle");
+
+    // Handle button click
+    graphBtn?.addEventListener("click", () => {
+      const showing = localStorage.getItem("graph-showing") === "true";
+      const newValue = (!showing).toString();
+      localStorage.setItem("graph-showing", newValue);
+
+      window.dispatchEvent(
+        new CustomEvent("graph-toggle", { detail: newValue }),
+      );
+    });
+  });
+</script>

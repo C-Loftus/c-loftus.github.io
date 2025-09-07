@@ -12,7 +12,11 @@ const posts = Object.entries(matches).map(([filePath, post]) => {
   let lastModified = "Unknown";
   try {
     const stats = fs.statSync(fullPath);
-    lastModified = stats.mtime.toISOString().split("T")[0]; // YYYY-MM-DD
+    lastModified = stats.mtime.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   } catch (err) {
     console.error(`Error reading file: ${fullPath}`, err);
   }
@@ -58,7 +62,14 @@ function getPreview(text: string | undefined, wordCount = 10) {
                 </p>
                 <div class="absolute bottom-4 left-6 text-sm text-gray-500 dark:text-gray-400">
                   Written{" "}
-                  {new Date(post.frontmatter.date).toISOString().split("T")[0]}
+                  {new Date(post.frontmatter.date).toLocaleDateString(
+                    undefined,
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    },
+                  )}
                 </div>
                 <div class="absolute bottom-4 right-6 text-sm text-gray-500 dark:text-gray-400">
                   Last modified: {post.lastModified}
