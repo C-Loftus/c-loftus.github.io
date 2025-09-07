@@ -14,7 +14,13 @@ export default defineConfig({
   },
 
   site: "https://colton.place",
-  trailingSlash: "never",
 
-  integrations: [mdx(), react(), sitegraphSitemapIntegration()]
+  integrations: [mdx(), react(), sitegraphSitemapIntegration({
+    sitemapConfig: {
+      contentRoot: "./src/pages",
+    },
+    graphConfig: {
+      depth: -1,
+    }
+  })]
 });

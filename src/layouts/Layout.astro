@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Themes from "astro-themes";
-import { PageGraph, PageBacklinks } from "starlight-site-graph/components";
+import { PageGraph } from "starlight-site-graph/components";
 ---
 
 <!doctype html>
@@ -22,22 +22,59 @@ import { PageGraph, PageBacklinks } from "starlight-site-graph/components";
 	<body>
 		<div
 			style="
-			border-top: 10px solid;
-			border-image-source: linear-gradient(90deg,#5d2f86,#8ed6fb 50%,#08e756);
-			border-image-slice: 1;
-			position: fixed;
-			top: 0;
-			right: 0;
-			left: 0;
-		"
+				border-top: 10px solid;
+				border-image-source: linear-gradient(90deg,#5d2f86,#8ed6fb 50%,#08e756);
+				border-image-slice: 1;
+				position: fixed;
+				top: 0;
+				right: 0;
+				left: 0;
+			"
 		>
 		</div>
+
 		<Header />
-		<PageGraph />
-		<!-- <PageBacklinks /> -->
+
+		<!-- Graph container, toggled client-side -->
+		<div
+			style="position: fixed; top: 10; left: 0;"
+			id="astro-site-graph"
+			hidden
+		>
+			<PageGraph class="p-10" />
+		</div>
 
 		<main>
 			<slot />
 		</main>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const graphContainer =
+					document.getElementById("astro-site-graph");
+
+				function updateGraphVisibility(showing) {
+					if (!graphContainer) return;
+					graphContainer.hidden = !showing;
+				}
+
+				// Initial state
+				updateGraphVisibility(
+					localStorage.getItem("graph-showing") === "true",
+				);
+
+				// Same-tab updates
+				window.addEventListener("graph-toggle", (e) => {
+					updateGraphVisibility(e.detail === "true");
+				});
+
+				// Cross-tab updates
+				window.addEventListener("storage", (e) => {
+					if (e.key === "graph-showing") {
+						updateGraphVisibility(e.newValue === "true");
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
