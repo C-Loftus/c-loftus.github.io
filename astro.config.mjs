@@ -21,6 +21,8 @@ export default defineConfig({
     },
     graphConfig: {
       depth: 2,
+      repelForce: 350,
+      linkDistance: 50
     }
   })]
 });
