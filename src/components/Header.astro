@@ -10,9 +10,8 @@ const currentPath = Astro.url.pathname;
       <a href="/" class="!no-underline"> Colton Loftus </a>
     </p>
     <ThemeIcon />
-    <button>
+    <button id="graph-toggle">
       <GraphIcon
-        id="graph-toggle"
         class="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded"
       />
     </button>
@@ -30,7 +29,11 @@ const currentPath = Astro.url.pathname;
           <li>
             <a
               href={path}
-              class={currentPath === path ? "underline" : "!no-underline"}
+              class={
+                currentPath.replace(/\/$/, "") === path.replace(/\/$/, "")
+                  ? "underline"
+                  : "!no-underline"
+              }
             >
               {name}
             </a>

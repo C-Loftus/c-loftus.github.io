@@ -20,7 +20,7 @@ export default defineConfig({
       contentRoot: "./src/pages",
     },
     graphConfig: {
-      depth: -1,
+      depth: 2,
     }
   })]
 });

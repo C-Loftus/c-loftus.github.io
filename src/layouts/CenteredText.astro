@@ -1,16 +1,27 @@
 ---
 import Layout from "./Layout.astro";
-import Image from "astro/components/Image.astro";
-import yacc from "../assets/yacc.png";
+
+const {
+  frontmatter: { date },
+} = Astro.props;
 ---
 
 <Layout>
-  <!-- <div class="opacity-20 fixed left-0 bottom-0 yacc dark:opacity-100">
-        <Image src={yacc} alt="yacc" />
-    </div> -->
   <div
     class="[&>p]:text-left [&>p]:pt-7 [&>p]:text-xl max-w-3xl mx-auto p-6 sm:p-8 lg:p-12 [&>ul]:list-disc [&>h1]:pt-5 [&>h2]:pt-7 [&>h3]:pt-3 [&>h4]:pt-3"
   >
+    {
+      date && (
+        <p class="text-gray-500 text-sm mt-2">
+          Written
+          {new Date(date).toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      )
+    }
     <slot />
     <div class="wavyFooter max-w-3xl mx-auto pt-18"></div>
   </div>
@@ -24,10 +35,5 @@ import yacc from "../assets/yacc.png";
     background-repeat: repeat-x;
     background-position: center bottom;
     border-radius: 40%;
-  }
-
-  .yacc img {
-    max-width: 200px;
-    height: auto;
   }
 </style>

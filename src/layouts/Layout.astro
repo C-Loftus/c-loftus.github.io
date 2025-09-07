@@ -19,7 +19,7 @@ import { PageGraph } from "starlight-site-graph/components";
 		<title>colton.place</title>
 		<Themes defaultTheme="dark" />
 	</head>
-	<body>
+	<body class="flex flex-col min-h-screen">
 		<div
 			style="
 				border-top: 10px solid;
@@ -29,31 +29,34 @@ import { PageGraph } from "starlight-site-graph/components";
 				top: 0;
 				right: 0;
 				left: 0;
+				z-index: 50;
 			"
 		>
 		</div>
 
 		<Header />
 
-		<!-- Graph container, toggled client-side -->
-		<div
-			style="position: fixed; top: 10; left: 0;"
-			id="astro-site-graph"
-			hidden
-		>
-			<PageGraph class="p-10" />
-		</div>
+		<div class="relative flex-1">
+			<!-- Graph pinned to top-left of content (below header) -->
+			<div
+				id="astro-site-graph"
+				hidden
+				class="absolute top-0 left-0 z-40"
+			>
+				<PageGraph class="p-10" />
+			</div>
 
-		<main>
-			<slot />
-		</main>
+			<main class="p-4">
+				<slot />
+			</main>
+		</div>
 
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
 				const graphContainer =
 					document.getElementById("astro-site-graph");
 
-				function updateGraphVisibility(showing) {
+				function updateGraphVisibility(showing: boolean) {
 					if (!graphContainer) return;
 					graphContainer.hidden = !showing;
 				}
@@ -65,7 +68,7 @@ import { PageGraph } from "starlight-site-graph/components";
 
 				// Same-tab updates
 				window.addEventListener("graph-toggle", (e) => {
-					updateGraphVisibility(e.detail === "true");
+					updateGraphVisibility((e as CustomEvent).detail === "true");
 				});
 
 				// Cross-tab updates
