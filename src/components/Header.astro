@@ -55,7 +55,7 @@ const currentPath = Astro.url.pathname;
       localStorage.setItem("graph-showing", newValue);
 
       window.dispatchEvent(
-        new CustomEvent("graph-toggle", { detail: newValue }),
+        new CustomEvent("graph-toggle", { detail: newValue })
       );
     });
   });

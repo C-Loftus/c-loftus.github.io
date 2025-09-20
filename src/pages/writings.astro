@@ -1,80 +1,66 @@
 ---
-import fs from "fs";
-import path from "path";
 import Layout from "../layouts/Layout.astro";
-
+import { icon, library } from "@fortawesome/fontawesome-svg-core";
+import { faRss } from "@fortawesome/free-solid-svg-icons";
+library.add(faRss);
+const rssIcon = icon({ prefix: "fas", iconName: faRss.iconName });
 const matches = import.meta.glob("../pages/writings/*.mdx", { eager: true });
-
-const posts = Object.entries(matches).map(([filePath, post]) => {
-  // Resolve absolute file path correctly
-  const fullPath = path.resolve(new URL(filePath, import.meta.url).pathname);
-
-  let lastModified = "Unknown";
-  try {
-    const stats = fs.statSync(fullPath);
-    lastModified = stats.mtime.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch (err) {
-    console.error(`Error reading file: ${fullPath}`, err);
-  }
-
-  return {
-    ...post,
-    lastModified,
-  };
-});
-
-function getPreview(text: string | undefined, wordCount = 10) {
-  if (!text) {
-    return "";
-  }
-  return text.split(" ").slice(0, wordCount).join(" ") + "...";
-}
+const posts = Object.values(matches);
 ---
 
 <Layout>
-  <h1 class="font-semibold pt-4">Writings</h1>
+  <div class="flex justify-center items-center gap-3">
+    <h1 class="font-semibold">Writings</h1>
+    <a href="/rss.xml" title="RSS Feed" class="flex items-center">
+      <span class="opacity-70 w-4 h-4 inline-block" set:html={rssIcon.html} />
+    </a>
+  </div>
+
   <div class="flex justify-center">
     <div
       class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-6 p-4 max-w-2xl w-full"
     >
       {
         posts
-          .sort(
-            (a, b) =>
-              new Date(b.frontmatter.date).getTime() -
-              new Date(a.frontmatter.date).getTime(),
+          .sort((a, b) =>
+            new Date(a.frontmatter.date).getTime() <
+            new Date(b.frontmatter.date).getTime()
+              ? 1
+              : -1
           )
-          .map((post) => (
+          .map((post: any) => (
             <article>
+              {" "}
               <a
                 href={post.url}
-                class="relative !no-underline block rounded-2xl p-6 transition-all duration-200 ease-in-out transform bg-neutral-100 text-neutral-900 shadow-lg hover:shadow-xl active:scale-95 dark:bg-neutral-700 dark:text-neutral-100 dark:shadow-black/30"
+                class="relative !no-underline block rounded-2xl p-6 transition-all duration-200 ease-in-out transform bg-neutral-100 text-neutral-900 shadow-lg hover:shadow-xl active:scale-95 dark:bg-neutral-800 dark:text-neutral-100 dark:shadow-black/30"
               >
+                {" "}
                 <h2 class="text-xl !font-medium mb-2">
-                  {post.frontmatter.title}
-                </h2>
-                <p class="text-gray-600 dark:text-gray-300 mb-10">
-                  {getPreview(post.frontmatter.summary)}
-                </p>
+                  {" "}
+                  {post.frontmatter.title}{" "}
+                </h2>{" "}
+                <p class="text-gray-500 dark:text-gray-400 mb-10">
+                  {" "}
+                  {post.frontmatter.summary}{" "}
+                </p>{" "}
                 <div class="absolute bottom-4 left-6 text-sm text-gray-500 dark:text-gray-400">
+                  {" "}
                   Written{" "}
                   {new Date(post.frontmatter.date).toLocaleDateString(
                     undefined,
-                    {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    },
-                  )}
-                </div>
+                    { year: "numeric", month: "long", day: "numeric" }
+                  )}{" "}
+                </div>{" "}
                 <div class="absolute bottom-4 right-6 text-sm text-gray-500 dark:text-gray-400">
-                  Last modified: {post.lastModified}
-                </div>
-              </a>
+                  {" "}
+                  Last modified:{" "}
+                  {new Date(post.frontmatter.lastModified).toLocaleDateString(
+                    undefined,
+                    { year: "numeric", month: "long", day: "numeric" }
+                  )}{" "}
+                </div>{" "}
+              </a>{" "}
             </article>
           ))
       }
