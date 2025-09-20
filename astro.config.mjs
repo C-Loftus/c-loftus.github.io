@@ -1,3 +1,8 @@
+/**
+ * Copyright 2025 Colton Loftus
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitegraphSitemapIntegration from 'starlight-site-graph/integration';
@@ -25,7 +30,8 @@ export default defineConfig({
     graphConfig: {
       depth: 2,
       repelForce: 350,
-      linkDistance: 75
+      linkDistance: 75,
+      colliderPadding: 50
     }
   })]
 });
