@@ -14,7 +14,7 @@ AI agents are new and at some level a bit of a marketing term. Yet regardless of
 1. Efficient at scale 
 2. Able to access global state about the entire system
 
-While developers have employed a variety of strategies for this task, I have seen surpringly little integration of accessibility APIs. Screen readers are an excellent example demonstrate their power. They provide a way for a user to gain context and act upon the entire system state in real time without needing any visual stimuli. Developers looking to create efficient AI agents can learn much from their design and UX decisions. 
+While developers have employed a variety of strategies for this task, I have seen surprisingly little integration of accessibility APIs. Screen readers are an excellent example demonstrate their power. They provide a way for a user to gain context and act upon the entire system state in real time without needing any visual stimuli. Developers looking to create efficient AI agents can learn much from their design and UX decisions. 
 
 As a proof of concept, I created a [MCP server for ATSPI](https://github.com/C-Loftus/ATSPI-MCP-Server/), the Linux accessibility API. This allows users to ask the model information about the state of the system in fine grained way. It is easy to create separate tool calls for retrieving a variety of info on system state. Info like the current focused app, the text in the next form input, or even the names of hidden windows that don't appear on screen are all easy to write for developers and are extremely efficient compared to a vision model. 
 
