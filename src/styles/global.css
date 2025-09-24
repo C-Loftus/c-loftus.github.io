@@ -5,7 +5,8 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-ul {
+ul,
+ol {
     font-size: large;
     padding-left: 1.5em;
 }
@@ -62,4 +63,9 @@ pre {
     /* optional: to distinguish the block */
     overflow: auto;
     /* optional: handle long content gracefully */
+}
+
+ol {
+    list-style-type: decimal;
+    /* ensures numbers appear */
 }
