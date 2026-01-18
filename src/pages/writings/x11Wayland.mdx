@@ -1,0 +1,23 @@
+---
+title: "X11 vs Wayland for Accessibility"
+date: 2026-01-17T23:37:12Z
+draft: false
+tags: [""]
+summary: "An overview of X11 vs Wayland for Linux Desktop accessibility"
+layout: ../../layouts/CenteredText.astro
+---
+
+# X11 vs Wayland
+
+X11 is the 11th version of the X windowing system. Until recently it was the default display server for Linux. X11 is generally speaking a monolith. It has a large legacy codebase and contains functionality for windowing, rendering, handling inputs, and a variety of other desktop operations. Wayland on the other hand tries to reduce the complexity by dealing only with low level operations like buffer submission or input delivery, and moving all operations like rendering and security decisions into specific Wayland compositors. Such compositors include mutter, sway, niri, or hyprland. One of Wayland's main design goals is atomicity. In X11 it is easy for applications to snoop on the inputs or state of others. In Wayland applications are generally isolated and any global state is dealt with by the compositor. 
+
+Despite the benefits for maintainability and security, Wayland has presented a significant challenge to Linux desktop accessibility for two reasons. First, accessibility is often based around global state. Many assistive technology applications need ways of registering global shortcuts or querying information about other windows. For instance in the ATSPI protocol for querying accessibility information, there are calls like [get_accessible_at_point](https://docs.gtk.org/atspi2/method.Component.get_accessible_at_point.html) or [grab_focus](https://docs.gtk.org/atspi2/method.Component.grab_focus.html). While these work fine in X11, calls like these are generally meaningless within Wayland since there are no global coordinates and all windowing operations are controlled by the compositor. 
+
+The Wayland protocol allows for protocol extensions which are standardized ways for compositors to align on new global behavior not contained in the main Wayland protocol. This could include support for things like screen sharing, virtual keyboards, or global keyboard shortcuts. However, the nature of this process leads to the second issue. The Wayland ecosystem is highly fragmented and is difficult for developers to develop for. Many compositors do not support global keyboard shortcuts and the ones that do may not implement them in the same way. Given the limited amount development resources among community driven Linux projects, it can make it more difficult to implement accessibility properly. Accessibility, particularly on Linux, is very often both a technical challenge and a social one: getting large amounts of people to both agree upon and implement common standards that may not be exposed to some users is difficult and slow.
+
+For better or worse, Wayland is likely to become the default display server and become increasingly more dominant in the Linux ecosystem. As such, it is necessary to find solutions for accessibility whether one likes it or not. There are four main ways to accomplish this.
+
+1. Put custom ad-hoc accessibility features directly into the compositor. This works but is not portable and is extremely opaque to other developers looking to reuse or extend functionality.
+2. Add standardized D-B interfaces for communicating with compositors. This is to my understanding what mutter currently does to allow for the special Orca modifier [here](https://gitlab.gnome.org/GNOME/mutter/-/blob/main/data/dbus-interfaces/org.freedesktop.a11y.xml?ref_type=heads). 
+3. Add standardized Wayland protocol extensions. Whether or not to use a protocol extension or d-bus interface depends on the accessibility feature in question. Both have different trade-offs and use cases. 
+4. Drop down to the kernel level below Wayland itself and interact with interfaces like `evdev`. This is much harder to program for and may require elevated permissions from the user, but tends to be much more portable across compositors.
