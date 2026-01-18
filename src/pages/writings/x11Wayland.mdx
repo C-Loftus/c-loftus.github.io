@@ -7,7 +7,7 @@ summary: "An overview of X11 vs Wayland for Linux Desktop accessibility"
 layout: ../../layouts/CenteredText.astro
 ---
 
-# X11 vs Wayland
+# X11 vs Wayland for Linux Accessibility
 
 X11 is the 11th version of the X windowing system. Until recently it was the default display server for Linux. X11 is generally speaking a monolith. It has a large legacy codebase and contains functionality for windowing, rendering, handling inputs, and a variety of other desktop operations. Wayland on the other hand tries to reduce the complexity by dealing only with low level operations like buffer submission or input delivery, and moving all operations like rendering and security decisions into specific Wayland compositors. Such compositors include mutter, sway, niri, or hyprland. One of Wayland's main design goals is atomicity. In X11 it is easy for applications to snoop on the inputs or state of others. In Wayland applications are generally isolated and any global state is dealt with by the compositor. 
 
