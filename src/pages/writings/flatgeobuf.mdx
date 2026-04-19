@@ -27,23 +27,25 @@ To explore a FlatGeobuf file's metadata, I recommend utilizing my [fgbdump](http
 
 ## Querying FlatGeobuf
 
-Due to the spatial index, a FlatGeobuf can be queried directly on S3 without needing to download the entire file. It is important to note that FlatGeobuf does not have any B-tree index on properties so you can only do efficient filtering on 
+Due to the spatial index, a FlatGeobuf can be queried directly on S3 without needing to download the entire file. It is important to note that FlatGeobuf does not have any B-tree index on properties so you can only do efficient filtering on
 
 1. A bounding box
 2. A feature ID (not all clients support this, but it is possible by using parts of the ids in the spatial index; for more info [read this](https://github.com/flatgeobuf/flatgeobuf/discussions/441#discussioncomment-15397599))
 
 As a few notes:
 
-- Since the spatial index is calculated by using the bounding box of each feature, some clients may return features outside of the query area due to the fact their associated bounding boxes were inside. 
+- Since the spatial index is calculated by using the bounding box of each feature, some clients may return features outside of the query area due to the fact their associated bounding boxes were inside.
 - Although it is generally not recommended to compress your FlatGeobuf file, you can nonetheless use seek optimized zip in GDAL to compress the file in a way that preserves proper spatial locality. For more info [read this](https://github.com/flatgeobuf/flatgeobuf/discussions/483).
 - In order to utilize predicate pushdown with the spatial index, you should ensure that your query client is opening the FlatGeobuf file properly. This is sometimes a bit different depending on the client. Here are a few examples:
 
 ### duckdb
 
+_before version 1.5_
+
 ```sql
 SELECT *
 FROM ST_Read(
-    'gcs://national-hydrologic-geospatial-fabric-reference-hydrofabric/reference_catchments.fgb',
+    'https://storage.googleapis.com/national-hydrologic-geospatial-fabric-reference-hydrofabric/reference_catchments_and_flowlines.fgb',
     spatial_filter_box = ST_MakeBox2D(
         ST_Point(-108.50231860661755, 39.05108882481538),
         ST_Point(-108.50231860661755, 39.05108882481538)
@@ -51,18 +53,26 @@ FROM ST_Read(
 )
 ```
 
+_as of version 1.5 and later_
+
+```sql
+  SELECT *
+	FROM ST_Read('gcs://national-hydrologic-geospatial-fabric-reference-hydrofabric/reference_catchments_and_flowlines.fgb')
+	WHERE geom && ST_MakeBox2D(ST_Point(-108.50231860661755, 39.05108882481538), ST_Point(-108.50231860661755, 39.05108882481538));
+```
+
 ### Geopandas
 
 ```py
 import  geopandas as gpd
-url = 'https://storage.googleapis.com/national-hydrologic-geospatial-fabric-reference-hydrofabric/reference_catchments.fgb'
+url = 'https://storage.googleapis.com/national-hydrologic-geospatial-fabric-reference-hydrofabric/reference_catchments_and_flowlines.fgb'
 gdf = gpd.read_file(url, engine="fiona", bbox=[-108.50231860661755, 39.05108882481538, -108.50231860661755, 39.05108882481538])
 ```
 
 ### Apache Sedona DB
 
 ```py
-import sedona.db 
+import sedona.db
 
 sd = sedona.db.connect()
 
