@@ -96,8 +96,8 @@ export default function PortfolioTable() {
   return (
     <section className="relative left-1/2 w-[calc(100vw-2rem)] max-w-7xl -translate-x-1/2 py-6 sm:w-[calc(100vw-4rem)]">
       <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-black/30">
-        <table className="w-full table-fixed text-left">
-          <thead>
+        <table className="block w-full text-left sm:table sm:table-fixed">
+          <thead className="hidden sm:table-header-group">
             <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
               <th
                 scope="col"
@@ -110,13 +110,13 @@ export default function PortfolioTable() {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="block sm:table-row-group">
             {portfolioItems.map((item) => (
               <tr
                 key={item.id}
-                className="border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-800/80"
+                className="block border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 sm:table-row dark:border-neutral-800 dark:hover:bg-neutral-800/80"
               >
-                <td className="px-3 py-5 align-middle sm:px-6">
+                <td className="block px-3 pb-3 pt-5 align-middle sm:table-cell sm:px-6 sm:py-5">
                   <div className="space-y-4">
                     <div>
                       <a
@@ -157,7 +157,7 @@ export default function PortfolioTable() {
                     </div>
                   </div>
                 </td>
-                <td className="px-3 py-5 align-middle sm:px-6">
+                <td className="block px-3 pb-5 pt-0 align-middle sm:table-cell sm:px-6 sm:py-5">
                   {item.iframe ? (
                     <div
                       className="aspect-[16/9] w-full overflow-hidden rounded-md border border-neutral-200 bg-neutral-100 shadow-md shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30 [&>iframe]:h-full [&>iframe]:w-full"
