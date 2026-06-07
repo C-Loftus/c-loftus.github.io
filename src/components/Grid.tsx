@@ -4,6 +4,7 @@ interface PortfolioItem {
   link: string;
   sourceLink?: string;
   mediaLink?: string;
+  iframe?: string;
   description: string;
   categories: string[];
   languages: string[];
@@ -15,7 +16,7 @@ const portfolioItems: PortfolioItem[] = [
     title: "US Bureau of Reclamation Reservoir Dashboard",
     link: "https://dashboard.wwdh.internetofwater.app/",
     description:
-      "Created a new dashboard and backend for the US Bureau of Reclamation to monitor critical reservoir data",
+      "Created a dashboard and geospatial API for the US Bureau of Reclamation to monitor critical reservoir data",
     categories: ["Data Engineering", "Backend"],
     languages: ["Python", "Terraform"],
     mediaLink: "/portfolio/wwdh.png",
@@ -39,7 +40,7 @@ const portfolioItems: PortfolioItem[] = [
     sourceLink:
       "https://github.com/World-Meteorological-Organization/wis2box-ui",
     description:
-      "Created a Typescript rewrite of the frontend for the World Meterological Foundation's distributed weather system, WIS2",
+      "Created a Typescript rewrite of the frontend for the World Meterological Foundation's distributed weather system, WIS2. Deployed by dozens of governments in the UN",
     categories: ["Frontend", "Distributed Systems"],
     languages: ["TypeScript"],
     mediaLink: "/portfolio/wis2.png",
@@ -55,6 +56,17 @@ const portfolioItems: PortfolioItem[] = [
     languages: ["Go"],
     mediaLink: "/portfolio/piper.png",
   },
+    {
+    id: 430,
+    title: "Arizona Water Observatory",
+    link: "https://arizonawaterobservatory.asu.edu/",
+    description:
+      "Created a hydrology data portal for the Center for Hydrologic Innovations at Arizona State University",
+    categories: ["Data Engineering", "Backend"],
+    languages: ["Python", "PostGIS", "Terraform"],
+    mediaLink: "/portfolio/awo.png",
+    sourceLink: "https://github.com/cgs-earth/ArizonaWaterObservatory",
+  },
   {
     id: 5,
     title: "Talon-AI-Tools",
@@ -65,6 +77,7 @@ const portfolioItems: PortfolioItem[] = [
     sourceLink: "https://github.com/C-Loftus/talon-ai-tools/",
     languages: ["Python"],
     mediaLink: "",
+   iframe: '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/FctiTs6D2tM?si=PfovY2SHI_QEFkOB\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>'
   },
   {
     id: 4,
@@ -76,7 +89,7 @@ const portfolioItems: PortfolioItem[] = [
     sourceLink: "https://github.com/C-Loftus/sight-free-talon/",
     languages: ["Python"],
     mediaLink: "",
-  },
+    iframe: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/i-XcpnVwvR0?si=Ljrc_vwow1kJtnqq\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"  },
 ];
 
 export default function PortfolioTable() {
@@ -93,7 +106,7 @@ export default function PortfolioTable() {
                 Project
               </th>
               <th scope="col" className="w-[58%] px-3 py-4 font-semibold sm:px-6">
-                Example
+                Visual
               </th>
             </tr>
           </thead>
@@ -145,7 +158,12 @@ export default function PortfolioTable() {
                   </div>
                 </td>
                 <td className="px-3 py-5 align-middle sm:px-6">
-                  {item.mediaLink ? (
+                  {item.iframe ? (
+                    <div
+                      className="aspect-[16/9] w-full overflow-hidden rounded-md border border-neutral-200 bg-neutral-100 shadow-md shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30 [&>iframe]:h-full [&>iframe]:w-full"
+                      dangerouslySetInnerHTML={{ __html: item.iframe }}
+                    />
+                  ) : item.mediaLink ? (
                     <a
                       href={item.mediaLink}
                       target="_blank"
