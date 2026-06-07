@@ -22,7 +22,7 @@ const currentPath = Astro.url.pathname;
         [
           { path: "/about", name: "About" },
           { path: "/contact", name: "Contact" },
-          { path: "/services", name: "Services" },
+          // { path: "/services", name: "Services" },
           { path: "/portfolio", name: "Portfolio" },
           { path: "/writings", name: "Writings" },
         ].map(({ path, name }) => (
@@ -55,7 +55,7 @@ const currentPath = Astro.url.pathname;
       localStorage.setItem("graph-showing", newValue);
 
       window.dispatchEvent(
-        new CustomEvent("graph-toggle", { detail: newValue })
+        new CustomEvent("graph-toggle", { detail: newValue }),
       );
     });
   });
