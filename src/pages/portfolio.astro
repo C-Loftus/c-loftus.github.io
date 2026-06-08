@@ -1,0 +1,24 @@
+---
+import { getImage } from "astro:assets";
+import PortfolioGrid from "../components/Grid";
+import CenteredText from "../layouts/CenteredText.astro";
+import awo from "../assets/portfolio/awo.png";
+import explorer from "../assets/portfolio/explorer.png";
+import piper from "../assets/portfolio/piper.png";
+import wis2 from "../assets/portfolio/wis2.png";
+import wwdh from "../assets/portfolio/wwdh.png";
+
+const portfolioImages = {
+  awo: (await getImage({ src: awo, format: "webp" })).src,
+  explorer: (await getImage({ src: explorer, format: "webp" })).src,
+  piper: (await getImage({ src: piper, format: "webp" })).src,
+  wis2: (await getImage({ src: wis2, format: "webp" })).src,
+  wwdh: (await getImage({ src: wwdh, format: "webp" })).src,
+};
+---
+
+<CenteredText frontmatter={{}}>
+  <h1>Open Source Portfolio</h1>
+
+  <PortfolioGrid client:load images={portfolioImages} />
+</CenteredText>
