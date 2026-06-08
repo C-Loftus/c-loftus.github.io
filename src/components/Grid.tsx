@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+
 interface PortfolioItem {
   id: number;
   title: string;
@@ -93,6 +96,30 @@ const portfolioItems: PortfolioItem[] = [
 ];
 
 export default function PortfolioTable() {
+  const [selectedImage, setSelectedImage] = useState<PortfolioItem | null>(
+    null,
+  );
+  const [isBrowser, setIsBrowser] = useState(false);
+
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedImage) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImage]);
+
   return (
     <section className="relative left-1/2 w-[calc(100vw-2rem)] max-w-7xl -translate-x-1/2 py-6 sm:w-[calc(100vw-4rem)]">
       <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-black/30">
@@ -164,12 +191,11 @@ export default function PortfolioTable() {
                       dangerouslySetInnerHTML={{ __html: item.iframe }}
                     />
                   ) : item.mediaLink ? (
-                    <a
-                      href={item.mediaLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full !no-underline"
-                      aria-label={`View media for ${item.title}`}
+                    <button
+                      type="button"
+                      className="block w-full cursor-zoom-in p-0 text-left"
+                      aria-label={`Enlarge media for ${item.title}`}
+                      onClick={() => setSelectedImage(item)}
                     >
                       <img
                         src={item.mediaLink}
@@ -177,7 +203,7 @@ export default function PortfolioTable() {
                         className="aspect-[16/9] w-full rounded-md border border-neutral-200 bg-neutral-100 object-contain shadow-md shadow-neutral-900/10 transition-transform duration-200 hover:scale-[1.01] dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30"
                         loading="lazy"
                       />
-                    </a>
+                    </button>
                   ) : (
                     <span className="flex aspect-[16/9] w-full items-center justify-center rounded-md border border-dashed border-neutral-300 bg-neutral-50 p-4 text-center text-sm font-medium text-neutral-500 dark:border-neutral-600 dark:bg-neutral-800/70 dark:text-neutral-400">
                       Add project image
@@ -189,6 +215,33 @@ export default function PortfolioTable() {
           </tbody>
         </table>
       </div>
+      {isBrowser && selectedImage?.mediaLink
+        ? createPortal(
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selectedImage.title} enlarged preview`}
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            type="button"
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/70 text-xl font-semibold leading-none text-white shadow-lg hover:bg-black focus:outline-none focus:ring-2 focus:ring-white"
+            aria-label="Close enlarged preview"
+            onClick={() => setSelectedImage(null)}
+          >
+            X
+          </button>
+          <img
+            src={selectedImage.mediaLink}
+            alt={`${selectedImage.title} preview`}
+            className="max-h-[88vh] max-w-[94vw] rounded-md border border-white/20 bg-neutral-100 object-contain shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>,
+          document.body,
+        )
+        : null}
     </section>
   );
 }
