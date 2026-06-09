@@ -40,17 +40,16 @@ import { PageGraph } from "starlight-site-graph/components";
 
     <div class="relative flex-1">
       <!-- Graph pinned to top-left of content (below header) -->
-      <div id="astro-site-graph" hidden class="absolute top-0 left-0 z-40">
+      <!-- <div id="astro-site-graph" hidden class="absolute top-0 left-0 z-40">
         <PageGraph class="p-10" />
-      </div>
-
+      </div> -->
 
       <main class="p-4">
         <slot />
       </main>
     </div>
 
-    <script>
+    <!-- <script>
       document.addEventListener("DOMContentLoaded", () => {
         const graphContainer = document.getElementById("astro-site-graph");
 
@@ -74,6 +73,6 @@ import { PageGraph } from "starlight-site-graph/components";
           }
         });
       });
-    </script>
+    </script> -->
   </body>
 </html>
