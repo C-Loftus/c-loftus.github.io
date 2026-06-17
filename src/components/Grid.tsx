@@ -311,16 +311,15 @@ export default function PortfolioTable({
         id="open-source-contributions"
         className="mt-8 overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-black/30"
       >
-        <div className="border-b border-neutral-200 bg-neutral-100 px-3 py-4 text-xs font-semibold uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 sm:px-6">
-          Open Source Contributions
-        </div>
         <table className="block w-full text-left sm:table sm:table-fixed">
           <thead className="hidden sm:table-header-group">
             <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
               <th
                 scope="col"
                 className="w-[76%] px-3 py-4 font-semibold sm:px-6"
-              ></th>
+              >
+                Open Source Contributions
+              </th>
               <th
                 scope="col"
                 className="w-[24%] px-3 py-4 font-semibold sm:px-6"
