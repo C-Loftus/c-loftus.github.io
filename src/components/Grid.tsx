@@ -1,3 +1,8 @@
+/**
+ * Copyright 2026 Colton Loftus
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -13,12 +18,29 @@ interface PortfolioItem {
   languages: string[];
 }
 
+interface OpenSourceContributionItem {
+  id: number;
+  title: string;
+  link: string;
+  contributionLink?: string;
+  logoKey?: keyof ContributionLogos;
+  description: string;
+  categories: string[];
+  languages: string[];
+}
+
 interface PortfolioImages {
   awo: string;
   explorer: string;
   piper: string;
   wis2: string;
   wwdh: string;
+}
+
+interface ContributionLogos {
+  talon: string;
+  orca: string;
+  iceberg: string;
 }
 
 const portfolioItems: PortfolioItem[] = [
@@ -87,7 +109,8 @@ const portfolioItems: PortfolioItem[] = [
     link: "https://github.com/C-Loftus/talon-ai-tools/",
     sourceLink: "https://github.com/C-Loftus/talon-ai-tools/",
     languages: ["Python"],
-    iframe: '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/FctiTs6D2tM?si=PfovY2SHI_QEFkOB\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>',
+    iframe:
+      '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/FctiTs6D2tM?si=PfovY2SHI_QEFkOB\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>',
   },
   {
     id: 4,
@@ -103,7 +126,96 @@ const portfolioItems: PortfolioItem[] = [
   },
 ];
 
-export default function PortfolioTable({ images }: { images: PortfolioImages }) {
+const openSourceContributions: OpenSourceContributionItem[] = [
+  {
+    id: 101,
+    title: "iceberg-go",
+    link: "https://github.com/apache/iceberg-go",
+    contributionLink:
+      "https://github.com/apache/iceberg-go/commits?author=c-loftus",
+    description:
+      "Contributed to Apache Iceberg's Go implementation of the Apache Iceberg specification",
+    categories: ["Data Engineering"],
+    languages: ["Go"],
+    logoKey: "iceberg",
+  },
+];
+
+function ProjectText({
+  item,
+}: {
+  item: Pick<
+    PortfolioItem | OpenSourceContributionItem,
+    "link" | "title" | "description" | "sourceLink" | "categories" | "languages"
+  >;
+}) {
+  return (
+    <div className="space-y-4">
+      <div>
+        <a
+          href={item.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xl font-semibold leading-tight text-neutral-950 underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:text-neutral-50 dark:decoration-neutral-600"
+        >
+          {item.title}
+        </a>
+        <p className="mt-3 text-sm leading-6 text-neutral-700 dark:text-neutral-300">
+          {item.description}
+        </p>
+        {item.contributionLink ? (
+          <a
+            href={item.contributionLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-block text-sm italic text-neutral-600 underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:text-neutral-400 dark:decoration-neutral-600"
+          >
+            Contributions
+          </a>
+        ) : (
+          <span className="mt-2 inline-block text-sm italic text-neutral-500 dark:text-neutral-400">
+            Add source code link
+          </span>
+        )}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {[...item.categories, ...item.languages].map((tag) => (
+          <span
+            key={tag}
+            className="inline-flex rounded-full border border-neutral-200 bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LogoCell({ logo, title }: { logo?: string; title: string }) {
+  return logo ? (
+    <div className="flex h-full items-center sm:justify-center">
+      <img
+        src={logo}
+        alt={`${title} logo`}
+        className="h-20 w-20 rounded-md border border-neutral-200 bg-white object-contain p-2 shadow-md shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30"
+        loading="lazy"
+      />
+    </div>
+  ) : (
+    <span className="flex h-20 w-20 items-center justify-center rounded-md border border-dashed border-neutral-300 bg-neutral-50 p-3 text-center text-xs font-medium text-neutral-500 dark:border-neutral-600 dark:bg-neutral-800/70 dark:text-neutral-400">
+      Add project logo
+    </span>
+  );
+}
+
+export default function PortfolioTable({
+  images,
+  logos,
+}: {
+  images: PortfolioImages;
+  logos: ContributionLogos;
+}) {
   const [selectedImage, setSelectedImage] = useState<PortfolioItem | null>(
     null,
   );
@@ -129,7 +241,10 @@ export default function PortfolioTable({ images }: { images: PortfolioImages }) 
   }, [selectedImage]);
 
   return (
-    <section className="relative left-1/2 w-[calc(100vw-2rem)] max-w-7xl -translate-x-1/2 py-6 sm:w-[calc(100vw-4rem)]">
+    <section
+      id="projects"
+      className="relative left-1/2 w-[calc(100vw-2rem)] max-w-7xl -translate-x-1/2 py-6 sm:w-[calc(100vw-4rem)]"
+    >
       <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-black/30">
         <table className="block w-full text-left sm:table sm:table-fixed">
           <thead className="hidden sm:table-header-group">
@@ -140,7 +255,10 @@ export default function PortfolioTable({ images }: { images: PortfolioImages }) 
               >
                 Project
               </th>
-              <th scope="col" className="w-[58%] px-3 py-4 font-semibold sm:px-6">
+              <th
+                scope="col"
+                className="w-[58%] px-3 py-4 font-semibold sm:px-6"
+              >
                 Visual
               </th>
             </tr>
@@ -155,45 +273,7 @@ export default function PortfolioTable({ images }: { images: PortfolioImages }) 
                   className="block border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 sm:table-row dark:border-neutral-800 dark:hover:bg-neutral-800/80"
                 >
                   <td className="block px-3 pb-3 pt-5 align-middle sm:table-cell sm:px-6 sm:py-5">
-                    <div className="space-y-4">
-                      <div>
-                        <a
-                          href={item.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xl font-semibold leading-tight text-neutral-950 underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:text-neutral-50 dark:decoration-neutral-600"
-                        >
-                          {item.title}
-                        </a>
-                        <p className="mt-3 text-sm leading-6 text-neutral-700 dark:text-neutral-300">
-                          {item.description}
-                        </p>
-                        {item.sourceLink ? (
-                          <a
-                            href={item.sourceLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-2 inline-block text-sm italic text-neutral-600 underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:text-neutral-400 dark:decoration-neutral-600"
-                          >
-                            Source code
-                          </a>
-                        ) : (
-                          <span className="mt-2 inline-block text-sm italic text-neutral-500 dark:text-neutral-400">
-                            Add source code link
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {[...item.categories, ...item.languages].map((tag) => (
-                          <span
-                            key={tag}
-                            className="inline-flex rounded-full border border-neutral-200 bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    <ProjectText item={item} />
                   </td>
                   <td className="block px-3 pb-5 pt-0 align-middle sm:table-cell sm:px-6 sm:py-5">
                     {item.iframe ? (
@@ -227,6 +307,47 @@ export default function PortfolioTable({ images }: { images: PortfolioImages }) 
           </tbody>
         </table>
       </div>
+      <div
+        id="open-source-contributions"
+        className="mt-8 overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-black/30"
+      >
+        <div className="border-b border-neutral-200 bg-neutral-100 px-3 py-4 text-xs font-semibold uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 sm:px-6">
+          Open Source Contributions
+        </div>
+        <table className="block w-full text-left sm:table sm:table-fixed">
+          <thead className="hidden sm:table-header-group">
+            <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+              <th
+                scope="col"
+                className="w-[76%] px-3 py-4 font-semibold sm:px-6"
+              ></th>
+              <th
+                scope="col"
+                className="w-[24%] px-3 py-4 font-semibold sm:px-6"
+              ></th>
+            </tr>
+          </thead>
+          <tbody className="block sm:table-row-group">
+            {openSourceContributions.map((item) => {
+              const logo = item.logoKey ? logos[item.logoKey] : "";
+
+              return (
+                <tr
+                  key={item.id}
+                  className="block border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 sm:table-row dark:border-neutral-800 dark:hover:bg-neutral-800/80"
+                >
+                  <td className="block px-3 pb-3 pt-5 align-middle sm:table-cell sm:px-6 sm:py-5">
+                    <ProjectText item={item} />
+                  </td>
+                  <td className="block px-3 pb-5 pt-0 align-middle sm:table-cell sm:px-6 sm:py-5">
+                    <LogoCell logo={logo} title={item.title} />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       {isBrowser && selectedImage?.mediaKey
         ? createPortal(
             <div
@@ -251,8 +372,8 @@ export default function PortfolioTable({ images }: { images: PortfolioImages }) 
                 onClick={(event) => event.stopPropagation()}
               />
             </div>,
-          document.body,
-        )
+            document.body,
+          )
         : null}
     </section>
   );

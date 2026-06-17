@@ -7,6 +7,9 @@ import explorer from "../assets/portfolio/explorer.png";
 import piper from "../assets/portfolio/piper.png";
 import wis2 from "../assets/portfolio/wis2.png";
 import wwdh from "../assets/portfolio/wwdh.png";
+import talonLogo from "../assets/talon-logo.png";
+import orcaLogo from "../assets/orca-logo.png";
+import icebergLogo from "../assets/iceberg.svg";
 
 const portfolioImages = {
   awo: (await getImage({ src: awo, format: "webp" })).src,
@@ -15,10 +18,36 @@ const portfolioImages = {
   wis2: (await getImage({ src: wis2, format: "webp" })).src,
   wwdh: (await getImage({ src: wwdh, format: "webp" })).src,
 };
+
+const contributionLogos = {
+  talon: (await getImage({ src: talonLogo, format: "webp" })).src,
+  orca: (await getImage({ src: orcaLogo, format: "webp" })).src,
+  iceberg: (await getImage({ src: icebergLogo, format: "webp" })).src,
+};
 ---
 
 <CenteredText frontmatter={{}}>
   <h1>Open Source Portfolio</h1>
-
-  <PortfolioGrid client:load images={portfolioImages} />
+  <nav
+    aria-label="Jump to portfolio sections"
+    class="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-neutral-600 dark:text-neutral-300"
+  >
+    <a
+      href="#projects"
+      class="underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:decoration-neutral-600"
+    >
+      Projects
+    </a>
+    <a
+      href="#open-source-contributions"
+      class="underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:decoration-neutral-600"
+    >
+      Open source contributions
+    </a>
+  </nav>
+  <PortfolioGrid
+    client:load
+    images={portfolioImages}
+    logos={contributionLogos}
+  />
 </CenteredText>
