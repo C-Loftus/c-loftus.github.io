@@ -95,18 +95,18 @@ export const portfolioItems: PortfolioItem[] = [
     media: awo,
     sourceLink: "https://github.com/cgs-earth/ArizonaWaterObservatory",
   },
-  // {
-  //   id: 5,
-  //   title: "Talon-AI-Tools",
-  //   description:
-  //     "Integrate the Talon voice dictation software with large language models for more accessible and intelligent voice control",
-  //   categories: ["Accessibility", "Voice control"],
-  //   link: "https://github.com/C-Loftus/talon-ai-tools/",
-  //   sourceLink: "https://github.com/C-Loftus/talon-ai-tools/",
-  //   languages: ["Python"],
-  //   iframe:
-  //     '<iframe width="560" height="315" src="https://www.youtube.com/embed/FctiTs6D2tM?si=PfovY2SHI_QEFkOB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-  // },
+  {
+    id: 5,
+    title: "Talon-AI-Tools",
+    description:
+      "Integrate the Talon voice dictation software with large language models for more accessible and intelligent voice control",
+    categories: ["Accessibility", "Voice control"],
+    link: "https://github.com/C-Loftus/talon-ai-tools/",
+    sourceLink: "https://github.com/C-Loftus/talon-ai-tools/",
+    languages: ["Python"],
+    iframe:
+      '<iframe width="560" height="315" src="https://www.youtube.com/embed/FctiTs6D2tM?si=PfovY2SHI_QEFkOB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+  },
   // {
   //   id: 4,
   //   title: "Sight-free-talon",
