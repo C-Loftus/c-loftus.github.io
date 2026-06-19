@@ -194,12 +194,12 @@ export default function PortfolioTable({
               return (
                 <tr
                   key={item.id}
-                  className="block border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 sm:table-row dark:border-neutral-800 dark:hover:bg-neutral-800/80"
+                  className="grid grid-cols-[1fr_auto] gap-x-4 border-b border-neutral-200 px-3 py-5 last:border-b-0 hover:bg-neutral-50 sm:table-row sm:px-0 sm:py-0 dark:border-neutral-800 dark:hover:bg-neutral-800/80"
                 >
-                  <td className="block px-3 pb-3 pt-5 align-middle sm:table-cell sm:px-6 sm:py-5">
+                  <td className="min-w-0 align-middle sm:table-cell sm:px-6 sm:py-5">
                     <ProjectText item={item} />
                   </td>
-                  <td className="block px-3 pb-5 pt-0 align-middle sm:table-cell sm:px-6 sm:py-5">
+                  <td className="align-start pt-1 sm:table-cell sm:px-6 sm:py-5 sm:align-middle">
                     <LogoCell logo={item.logo} title={item.title} />
                   </td>
                 </tr>
