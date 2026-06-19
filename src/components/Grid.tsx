@@ -82,7 +82,7 @@ function LogoCell({ logo, title }: { logo?: string; title: string }) {
       <img
         src={logo}
         alt={`${title} logo`}
-        className="h-20 w-20 rounded-md border border-neutral-200 bg-white object-contain p-2 shadow-md shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30"
+        className="h-20 w-20 rounded-md border border-neutral-200 bg-white object-contain p-2 shadow-md shadow-neutral-900/10 dark:border-neutral-700 dark:shadow-black/30"
         loading="lazy"
       />
     </div>
