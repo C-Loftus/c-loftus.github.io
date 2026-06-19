@@ -1,29 +1,25 @@
 ---
 import { getImage } from "astro:assets";
 import PortfolioGrid from "../components/Grid";
+import {
+  openSourceContributions,
+  portfolioItems,
+} from "../data/portfolio";
 import CenteredText from "../layouts/CenteredText.astro";
-import awo from "../assets/portfolio/awo.png";
-import explorer from "../assets/portfolio/explorer.png";
-import piper from "../assets/portfolio/piper.png";
-import wis2 from "../assets/portfolio/wis2.png";
-import wwdh from "../assets/portfolio/wwdh.png";
-import talonLogo from "../assets/talon-logo.png";
-import orcaLogo from "../assets/orca-logo.png";
-import icebergLogo from "../assets/iceberg.svg";
 
-const portfolioImages = {
-  awo: (await getImage({ src: awo, format: "webp" })).src,
-  explorer: (await getImage({ src: explorer, format: "webp" })).src,
-  piper: (await getImage({ src: piper, format: "webp" })).src,
-  wis2: (await getImage({ src: wis2, format: "webp" })).src,
-  wwdh: (await getImage({ src: wwdh, format: "webp" })).src,
-};
+const resolvedPortfolioItems = await Promise.all(
+  portfolioItems.map(async ({ media, ...item }) => ({
+    ...item,
+    media: media ? (await getImage({ src: media, format: "webp" })).src : "",
+  })),
+);
 
-const contributionLogos = {
-  talon: (await getImage({ src: talonLogo, format: "webp" })).src,
-  orca: (await getImage({ src: orcaLogo, format: "webp" })).src,
-  iceberg: (await getImage({ src: icebergLogo, format: "webp" })).src,
-};
+const resolvedOpenSourceContributions = await Promise.all(
+  openSourceContributions.map(async ({ logo, ...item }) => ({
+    ...item,
+    logo: logo ? (await getImage({ src: logo, format: "webp" })).src : "",
+  })),
+);
 ---
 
 <CenteredText frontmatter={{}}>
@@ -42,12 +38,12 @@ const contributionLogos = {
       href="#open-source-contributions"
       class="underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:decoration-neutral-600"
     >
-      Open source contributions
+      Contributions
     </a>
   </nav>
   <PortfolioGrid
     client:load
-    images={portfolioImages}
-    logos={contributionLogos}
+    portfolioItems={resolvedPortfolioItems}
+    openSourceContributions={resolvedOpenSourceContributions}
   />
 </CenteredText>
