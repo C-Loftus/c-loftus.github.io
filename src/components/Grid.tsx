@@ -145,10 +145,14 @@ function ProjectText({
   item,
 }: {
   item: Pick<
-    PortfolioItem | OpenSourceContributionItem,
+    PortfolioItem,
     "link" | "title" | "description" | "sourceLink" | "categories" | "languages"
-  >;
+  > &
+    Partial<Pick<OpenSourceContributionItem, "contributionLink">>;
 }) {
+  const sourceLink = item.sourceLink ?? item.contributionLink;
+  const sourceLabel = item.contributionLink ? "Contributions" : "Source code";
+
   return (
     <div className="space-y-4">
       <div>
@@ -163,14 +167,14 @@ function ProjectText({
         <p className="mt-3 text-sm leading-6 text-neutral-700 dark:text-neutral-300">
           {item.description}
         </p>
-        {item.contributionLink ? (
+        {sourceLink ? (
           <a
-            href={item.contributionLink}
+            href={sourceLink}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 inline-block text-sm italic text-neutral-600 underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:text-neutral-400 dark:decoration-neutral-600"
           >
-            Contributions
+            {sourceLabel}
           </a>
         ) : (
           <span className="mt-2 inline-block text-sm italic text-neutral-500 dark:text-neutral-400">
@@ -243,25 +247,15 @@ export default function PortfolioTable({
   return (
     <section
       id="projects"
-      className="relative left-1/2 w-[calc(100vw-2rem)] max-w-7xl -translate-x-1/2 py-6 sm:w-[calc(100vw-4rem)]"
+      className="relative left-1/2 w-screen max-w-7xl -translate-x-1/2 py-6 sm:w-[calc(100vw-4rem)]"
     >
-      <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-black/30">
+      <div className="overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30">
+        <h2 className="border-b border-neutral-200 bg-neutral-100 px-3 py-4 text-left text-sm font-semibold text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
+          Projects
+        </h2>
         <table className="block w-full text-left sm:table sm:table-fixed">
           <thead className="hidden sm:table-header-group">
-            <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
-              <th
-                scope="col"
-                className="w-[42%] px-3 py-4 font-semibold sm:px-6"
-              >
-                Project
-              </th>
-              <th
-                scope="col"
-                className="w-[58%] px-3 py-4 font-semibold sm:px-6"
-              >
-                Visual
-              </th>
-            </tr>
+            <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"></tr>
           </thead>
           <tbody className="block sm:table-row-group">
             {portfolioItems.map((item) => {
@@ -309,22 +303,14 @@ export default function PortfolioTable({
       </div>
       <div
         id="open-source-contributions"
-        className="mt-8 overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-black/30"
+        className="mt-8 overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30"
       >
+        <h2 className="border-b border-neutral-200 bg-neutral-100 px-3 py-4 text-left text-sm font-semibold text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
+          Contributions
+        </h2>
         <table className="block w-full text-left sm:table sm:table-fixed">
           <thead className="hidden sm:table-header-group">
-            <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
-              <th
-                scope="col"
-                className="w-[76%] px-3 py-4 font-semibold sm:px-6"
-              >
-                Open Source Contributions
-              </th>
-              <th
-                scope="col"
-                className="w-[24%] px-3 py-4 font-semibold sm:px-6"
-              ></th>
-            </tr>
+            <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"></tr>
           </thead>
           <tbody className="block sm:table-row-group">
             {openSourceContributions.map((item) => {
