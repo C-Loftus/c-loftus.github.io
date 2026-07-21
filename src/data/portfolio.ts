@@ -148,7 +148,7 @@ export const openSourceContributions: OpenSourceContributionItem[] = [
     logo: pygeoapi,
   },
   {
-    id: 101,
+    id: 102,
     title: "arrow-go",
     link: "https://github.com/apache/arrow-go",
     contributionLink:
