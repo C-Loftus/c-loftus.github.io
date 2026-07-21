@@ -12,6 +12,7 @@ import piper from "../assets/portfolio/piper.png";
 import wis2 from "../assets/portfolio/wis2.png";
 import wwdh from "../assets/portfolio/wwdh.png";
 import pygeoapi from "../assets/portfolio/pygeoapi.png";
+import arrowLogo from "../assets/arrow.png";
 
 type PortfolioAsset = ImageMetadata | string;
 
@@ -145,5 +146,16 @@ export const openSourceContributions: OpenSourceContributionItem[] = [
     categories: ["Backend"],
     languages: ["Python"],
     logo: pygeoapi,
+  },
+  {
+    id: 101,
+    title: "iceberg-go",
+    link: "https://github.com/apache/arrow-go",
+    contributionLink:
+      "https://github.com/apache/arrow-go/commits?author=c-loftus",
+    description: "The Go implementation of Apache Arrow",
+    categories: ["Data Engineering"],
+    languages: ["Go"],
+    logo: arrowLogo,
   },
 ];
