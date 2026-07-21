@@ -149,7 +149,7 @@ export const openSourceContributions: OpenSourceContributionItem[] = [
   },
   {
     id: 101,
-    title: "iceberg-go",
+    title: "arrow-go",
     link: "https://github.com/apache/arrow-go",
     contributionLink:
       "https://github.com/apache/arrow-go/commits?author=c-loftus",
