@@ -5,9 +5,11 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { rowSlug } from "../data/portfolio";
 import type {
   OpenSourceContributionItem,
   PortfolioItem,
+  PresentationItem,
 } from "../data/portfolio";
 
 type ResolvedPortfolioItem = Omit<PortfolioItem, "media"> & {
@@ -21,6 +23,9 @@ type ResolvedOpenSourceContributionItem = Omit<
   logo: string;
 };
 
+/** Anything that can be opened in the lightbox */
+type ZoomableItem = { title: string; media: string };
+
 function ProjectText({
   item,
 }: {
@@ -28,7 +33,7 @@ function ProjectText({
     PortfolioItem,
     "link" | "title" | "description" | "sourceLink" | "categories" | "languages"
   > &
-    Partial<Pick<OpenSourceContributionItem, "contributionLink">>;
+  Partial<Pick<OpenSourceContributionItem, "contributionLink">>;
 }) {
   const sourceLink = item.sourceLink ?? item.contributionLink;
   const sourceLabel = item.contributionLink ? "Contributions" : "Source code";
@@ -76,6 +81,53 @@ function ProjectText({
   );
 }
 
+const presentationLinkClass =
+  "underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:decoration-neutral-600";
+
+function MediaCell({
+  item,
+  onZoom,
+  emptyLabel,
+}: {
+  item: { title: string; media?: string; iframe?: string };
+  onZoom: (item: ZoomableItem) => void;
+  emptyLabel: string;
+}) {
+  if (item.iframe) {
+    return (
+      <div
+        className="aspect-[16/9] w-full overflow-hidden rounded-md border border-neutral-200 bg-neutral-100 shadow-md shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30 [&>iframe]:h-full [&>iframe]:w-full"
+        dangerouslySetInnerHTML={{ __html: item.iframe }}
+      />
+    );
+  }
+
+  if (item.media) {
+    const media = item.media;
+    return (
+      <button
+        type="button"
+        className="block w-full cursor-zoom-in p-0 text-left"
+        aria-label={`Enlarge media for ${item.title}`}
+        onClick={() => onZoom({ title: item.title, media })}
+      >
+        <img
+          src={media}
+          alt={`${item.title} preview`}
+          className="aspect-[16/9] w-full rounded-md border border-neutral-200 bg-neutral-100 object-contain shadow-md shadow-neutral-900/10 transition-transform duration-200 hover:scale-[1.01] dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30"
+          loading="lazy"
+        />
+      </button>
+    );
+  }
+
+  return (
+    <span className="flex aspect-[16/9] w-full items-center justify-center rounded-md border border-dashed border-neutral-300 bg-neutral-50 p-4 text-center text-sm font-medium text-neutral-500 dark:border-neutral-600 dark:bg-neutral-800/70 dark:text-neutral-400">
+      {emptyLabel}
+    </span>
+  );
+}
+
 function LogoCell({ logo, title }: { logo?: string; title: string }) {
   return logo ? (
     <div className="flex h-full items-center sm:justify-center">
@@ -96,12 +148,13 @@ function LogoCell({ logo, title }: { logo?: string; title: string }) {
 export default function PortfolioTable({
   portfolioItems,
   openSourceContributions,
+  presentations = [],
 }: {
   portfolioItems: ResolvedPortfolioItem[];
   openSourceContributions: ResolvedOpenSourceContributionItem[];
+  presentations?: PresentationItem[];
 }) {
-  const [selectedImage, setSelectedImage] =
-    useState<ResolvedPortfolioItem | null>(null);
+  const [selectedImage, setSelectedImage] = useState<ZoomableItem | null>(null);
   const [isBrowser, setIsBrowser] = useState(false);
 
   useEffect(() => {
@@ -140,37 +193,19 @@ export default function PortfolioTable({
             {portfolioItems.map((item) => {
               return (
                 <tr
-                  key={item.id}
-                  className="block border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 sm:table-row dark:border-neutral-800 dark:hover:bg-neutral-800/80"
+                  key={rowSlug(item.title)}
+                  id={rowSlug(item.title)}
+                  className="block scroll-mt-24 border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 target:bg-neutral-100 sm:table-row dark:border-neutral-800 dark:hover:bg-neutral-800/80 dark:target:bg-neutral-800"
                 >
                   <td className="block px-3 pb-3 pt-5 align-middle sm:table-cell sm:px-6 sm:py-5">
                     <ProjectText item={item} />
                   </td>
                   <td className="block px-3 pb-5 pt-0 align-middle sm:table-cell sm:px-6 sm:py-5">
-                    {item.iframe ? (
-                      <div
-                        className="aspect-[16/9] w-full overflow-hidden rounded-md border border-neutral-200 bg-neutral-100 shadow-md shadow-neutral-900/10 dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30 [&>iframe]:h-full [&>iframe]:w-full"
-                        dangerouslySetInnerHTML={{ __html: item.iframe }}
-                      />
-                    ) : item.media ? (
-                      <button
-                        type="button"
-                        className="block w-full cursor-zoom-in p-0 text-left"
-                        aria-label={`Enlarge media for ${item.title}`}
-                        onClick={() => setSelectedImage(item)}
-                      >
-                        <img
-                          src={item.media}
-                          alt={`${item.title} preview`}
-                          className="aspect-[16/9] w-full rounded-md border border-neutral-200 bg-neutral-100 object-contain shadow-md shadow-neutral-900/10 transition-transform duration-200 hover:scale-[1.01] dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-black/30"
-                          loading="lazy"
-                        />
-                      </button>
-                    ) : (
-                      <span className="flex aspect-[16/9] w-full items-center justify-center rounded-md border border-dashed border-neutral-300 bg-neutral-50 p-4 text-center text-sm font-medium text-neutral-500 dark:border-neutral-600 dark:bg-neutral-800/70 dark:text-neutral-400">
-                        Add project image
-                      </span>
-                    )}
+                    <MediaCell
+                      item={item}
+                      onZoom={setSelectedImage}
+                      emptyLabel="Add project image"
+                    />
                   </td>
                 </tr>
               );
@@ -193,8 +228,9 @@ export default function PortfolioTable({
             {openSourceContributions.map((item) => {
               return (
                 <tr
-                  key={item.id}
-                  className="grid grid-cols-[1fr_auto] gap-x-4 border-b border-neutral-200 px-3 py-5 last:border-b-0 hover:bg-neutral-50 sm:table-row sm:px-0 sm:py-0 dark:border-neutral-800 dark:hover:bg-neutral-800/80"
+                  key={rowSlug(item.title)}
+                  id={rowSlug(item.title)}
+                  className="grid scroll-mt-24 grid-cols-[1fr_auto] gap-x-4 border-b border-neutral-200 px-3 py-5 last:border-b-0 hover:bg-neutral-50 target:bg-neutral-100 sm:table-row sm:px-0 sm:py-0 dark:border-neutral-800 dark:hover:bg-neutral-800/80 dark:target:bg-neutral-800"
                 >
                   <td className="min-w-0 align-middle sm:table-cell sm:px-6 sm:py-5">
                     <ProjectText item={item} />
@@ -208,32 +244,119 @@ export default function PortfolioTable({
           </tbody>
         </table>
       </div>
+      {presentations.length > 0 ? (
+        <div
+          id="presentations"
+          className="mt-8 overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30"
+        >
+          <h2 className="border-b border-neutral-200 bg-neutral-100 px-3 py-4 text-left text-sm font-semibold text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
+            Presentations
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-neutral-200 text-xs uppercase tracking-wide text-neutral-500 dark:border-neutral-700 dark:text-neutral-400">
+                  <th scope="col" className="px-3 py-2 font-medium sm:px-6">
+                    Talk
+                  </th>
+                  <th scope="col" className="px-3 py-2 font-medium sm:px-6">
+                    Venue
+                  </th>
+                  <th
+                    scope="col"
+                    className="whitespace-nowrap px-3 py-2 font-medium sm:px-6"
+                  >
+                    Date
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {presentations.map((item) => {
+                  return (
+                    <tr
+                      key={rowSlug(item.title)}
+                      id={rowSlug(item.title)}
+                      className="scroll-mt-24 border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 target:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-800/80 dark:target:bg-neutral-800"
+                    >
+                      <td className="px-3 py-3 align-top sm:px-6">
+                        {item.presentationLink ? (
+                          <a
+                            href={item.presentationLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`font-medium text-neutral-950 dark:text-neutral-50 ${presentationLinkClass}`}
+                          >
+                            {item.title}
+                          </a>
+                        ) : (
+                          <span className="font-medium text-neutral-950 dark:text-neutral-50">
+                            {item.title}
+                          </span>
+                        )}
+                        {item.description ? (
+                          <p className="mt-1 text-neutral-600 dark:text-neutral-400">
+                            {item.description}
+                          </p>
+                        ) : null}
+                      </td>
+                      <td className="px-3 py-3 align-top text-neutral-700 dark:text-neutral-300 sm:px-6">
+                        {item.conferenceLink ? (
+                          <a
+                            href={item.conferenceLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={presentationLinkClass}
+                          >
+                            {item.venue}
+                          </a>
+                        ) : (
+                          item.venue
+                        )}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-3 align-top text-neutral-600 dark:text-neutral-400 sm:px-6">
+                        {item.date
+                          ? new Date(item.date).toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            timeZone: "UTC",
+                          })
+                          : null}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : null}
       {isBrowser && selectedImage?.media
         ? createPortal(
-            <div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-              role="dialog"
-              aria-modal="true"
-              aria-label={`${selectedImage.title} enlarged preview`}
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${selectedImage.title} enlarged preview`}
+            onClick={() => setSelectedImage(null)}
+          >
+            <button
+              type="button"
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/70 text-xl font-semibold leading-none text-white shadow-lg hover:bg-black focus:outline-none focus:ring-2 focus:ring-white"
+              aria-label="Close enlarged preview"
               onClick={() => setSelectedImage(null)}
             >
-              <button
-                type="button"
-                className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/70 text-xl font-semibold leading-none text-white shadow-lg hover:bg-black focus:outline-none focus:ring-2 focus:ring-white"
-                aria-label="Close enlarged preview"
-                onClick={() => setSelectedImage(null)}
-              >
-                X
-              </button>
-              <img
-                src={selectedImage.media}
-                alt={`${selectedImage.title} preview`}
-                className="max-h-[88vh] max-w-[94vw] rounded-md border border-white/20 bg-neutral-100 object-contain shadow-2xl"
-                onClick={(event) => event.stopPropagation()}
-              />
-            </div>,
-            document.body,
-          )
+              X
+            </button>
+            <img
+              src={selectedImage.media}
+              alt={`${selectedImage.title} preview`}
+              className="max-h-[88vh] max-w-[94vw] rounded-md border border-white/20 bg-neutral-100 object-contain shadow-2xl"
+              onClick={(event) => event.stopPropagation()}
+            />
+          </div>,
+          document.body,
+        )
         : null}
     </section>
   );

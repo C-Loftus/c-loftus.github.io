@@ -1,7 +1,11 @@
 ---
 import { getImage } from "astro:assets";
 import PortfolioGrid from "../components/Grid";
-import { openSourceContributions, portfolioItems } from "../data/portfolio";
+import {
+  openSourceContributions,
+  portfolioItems,
+  presentations,
+} from "../data/portfolio";
 import CenteredText from "../layouts/CenteredText.astro";
 
 const resolvedPortfolioItems = await Promise.all(
@@ -17,11 +21,12 @@ const resolvedOpenSourceContributions = await Promise.all(
     logo: logo ? (await getImage({ src: logo, format: "webp" })).src : "",
   })),
 );
+
 ---
 
 <CenteredText frontmatter={{}}>
   <h1>Open Source Portfolio</h1>
-  <center class="pt-8">
+  <center class="pt-8 text-neutral-600 dark:text-neutral-400">
     <i
       >For more, please see my <a href="https://github.com/c-loftus">GitHub</a
       ></i
@@ -44,10 +49,21 @@ const resolvedOpenSourceContributions = await Promise.all(
     >
       Contributions
     </a>
+    {
+      presentations.length > 0 && (
+        <a
+          href="#presentations"
+          class="underline decoration-neutral-300 underline-offset-4 hover:decoration-current dark:decoration-neutral-600"
+        >
+          Presentations
+        </a>
+      )
+    }
   </nav>
   <PortfolioGrid
     client:load
     portfolioItems={resolvedPortfolioItems}
     openSourceContributions={resolvedOpenSourceContributions}
+    presentations={presentations}
   />
 </CenteredText>
