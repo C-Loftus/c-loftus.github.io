@@ -178,6 +178,12 @@ export default function PortfolioTable({
   const [selectedImage, setSelectedImage] = useState<ZoomableItem | null>(null);
   const [isBrowser, setIsBrowser] = useState(false);
 
+  // Most recent first; undated talks sink to the bottom. ISO dates sort
+  // correctly as strings.
+  const sortedPresentations = [...presentations].sort((a, b) =>
+    (b.date ?? "").localeCompare(a.date ?? ""),
+  );
+
   useEffect(() => {
     setIsBrowser(true);
   }, []);
@@ -271,24 +277,8 @@ export default function PortfolioTable({
           <SectionHeading id="presentations">Presentations</SectionHeading>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b border-neutral-200 text-xs uppercase tracking-wide text-neutral-500 dark:border-neutral-700 dark:text-neutral-400">
-                  <th scope="col" className="px-3 py-2 font-medium sm:px-6">
-                    Talk
-                  </th>
-                  <th scope="col" className="px-3 py-2 font-medium sm:px-6">
-                    Venue
-                  </th>
-                  <th
-                    scope="col"
-                    className="whitespace-nowrap px-3 py-2 font-medium sm:px-6"
-                  >
-                    Date
-                  </th>
-                </tr>
-              </thead>
               <tbody>
-                {presentations.map((item) => {
+                {sortedPresentations.map((item) => {
                   return (
                     <tr
                       key={rowSlug(item.title)}
