@@ -128,6 +128,27 @@ function MediaCell({
   );
 }
 
+/** Section title that doubles as a copyable anchor link to its own section */
+function SectionHeading({ id, children }: { id: string; children: string }) {
+  return (
+    <h2 className="border-b border-neutral-200 bg-neutral-100 text-left text-sm font-semibold text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
+      <a
+        href={`#${id}`}
+        title={`Link to the ${children} section`}
+        className="group flex items-center gap-2 px-3 py-4 !no-underline"
+      >
+        {children}
+        <span
+          aria-hidden="true"
+          className="text-neutral-400 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 dark:text-neutral-500"
+        >
+          #
+        </span>
+      </a>
+    </h2>
+  );
+}
+
 function LogoCell({ logo, title }: { logo?: string; title: string }) {
   return logo ? (
     <div className="flex h-full items-center sm:justify-center">
@@ -177,14 +198,12 @@ export default function PortfolioTable({
   }, [selectedImage]);
 
   return (
-    <section
-      id="projects"
-      className="relative left-1/2 w-screen max-w-7xl -translate-x-1/2 py-6 sm:w-[calc(100vw-4rem)]"
-    >
-      <div className="overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30">
-        <h2 className="border-b border-neutral-200 bg-neutral-100 px-3 py-4 text-left text-sm font-semibold text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
-          Projects
-        </h2>
+    <section className="relative left-1/2 w-screen max-w-7xl -translate-x-1/2 py-6 sm:w-[calc(100vw-4rem)]">
+      <div
+        id="projects"
+        className="scroll-mt-24 overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30"
+      >
+        <SectionHeading id="projects">Projects</SectionHeading>
         <table className="block w-full text-left sm:table sm:table-fixed">
           <thead className="hidden sm:table-header-group">
             <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"></tr>
@@ -215,11 +234,11 @@ export default function PortfolioTable({
       </div>
       <div
         id="open-source-contributions"
-        className="mt-8 overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30"
+        className="mt-8 scroll-mt-24 overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30"
       >
-        <h2 className="border-b border-neutral-200 bg-neutral-100 px-3 py-4 text-left text-sm font-semibold text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
+        <SectionHeading id="open-source-contributions">
           Contributions
-        </h2>
+        </SectionHeading>
         <table className="block w-full text-left sm:table sm:table-fixed">
           <thead className="hidden sm:table-header-group">
             <tr className="border-b border-neutral-200 bg-neutral-100 text-xs uppercase tracking-wide text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"></tr>
@@ -247,11 +266,9 @@ export default function PortfolioTable({
       {presentations.length > 0 ? (
         <div
           id="presentations"
-          className="mt-8 overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30"
+          className="mt-8 scroll-mt-24 overflow-hidden border-y border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 sm:rounded-lg sm:border sm:shadow-xl sm:shadow-neutral-900/10 sm:dark:shadow-black/30"
         >
-          <h2 className="border-b border-neutral-200 bg-neutral-100 px-3 py-4 text-left text-sm font-semibold text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
-            Presentations
-          </h2>
+          <SectionHeading id="presentations">Presentations</SectionHeading>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
