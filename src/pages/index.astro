@@ -2,6 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import colton from "../assets/me_2026.png";
+import borLogo from "../assets/logos/bor-mark.png";
+import usgsLogo from "../assets/logos/usgs-mark.png";
+import icebergLogo from "../assets/iceberg.svg";
 import {
   openSourceContributions,
   portfolioItems,
@@ -33,10 +36,12 @@ const featured = [
   {
     ...byTitle("Geoconnex"),
     href: `/portfolio#${rowSlug("Geoconnex")}`,
+    orgLogo: { src: usgsLogo, alt: "US Geological Survey" },
   },
   {
     ...byTitle("US Bureau of Reclamation Reservoir Dashboard"),
     href: `/portfolio#${rowSlug("US Bureau of Reclamation Reservoir Dashboard")}`,
+    orgLogo: { src: borLogo, alt: "US Bureau of Reclamation" },
   },
   {
     ...byTitle("iceberg-go"),
@@ -44,6 +49,7 @@ const featured = [
     description:
       "Contributor to iceberg-go, the Go implementation of the Apache Iceberg table format",
     href: `/portfolio#${rowSlug("iceberg-go")}`,
+    orgLogo: { src: icebergLogo, alt: "Apache Iceberg" },
   },
 ];
 ---
@@ -130,16 +136,28 @@ const featured = [
               href={item.href}
               class="!no-underline flex h-full flex-col rounded-2xl p-5 bg-neutral-100 text-neutral-700 shadow-lg transition-all duration-200 ease-in-out hover:shadow-xl active:scale-95 dark:bg-neutral-800 dark:text-neutral-300 dark:shadow-black/30"
             >
-              <h3 class="!font-medium">{item.title}</h3>
+              <h3 class="!font-medium text-neutral-900 dark:text-neutral-50">{item.title}</h3>
               <p class="mt-2 !text-base text-neutral-600 dark:text-neutral-400">
                 {item.description}
               </p>
-              <div class="mt-auto pt-4 flex flex-wrap gap-2">
-                {item.languages.map((lang) => (
-                  <span class="rounded-full px-2 py-0.5 text-xs bg-neutral-200 text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300">
-                    {lang}
-                  </span>
-                ))}
+              <div class="mt-auto pt-4 flex items-end justify-between gap-3">
+                <div class="flex flex-wrap gap-2">
+                  {item.languages.map((lang) => (
+                    <span class="rounded-full px-2 py-0.5 text-xs bg-neutral-200 text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300">
+                      {lang}
+                    </span>
+                  ))}
+                </div>
+                {item.orgLogo && (
+                  <div class="flex h-10 shrink-0 items-center">
+                    <Image
+                      src={item.orgLogo.src}
+                      alt={item.orgLogo.alt}
+                      class="max-h-full w-auto object-contain"
+                      height={64}
+                    />
+                  </div>
+                )}
               </div>
             </a>
           ))
@@ -166,4 +184,5 @@ const featured = [
   :global([data-theme="dark"]) .gradient-cta {
     --cta-surface: #171717;
   }
+
 </style>
